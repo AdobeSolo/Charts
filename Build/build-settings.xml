@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+<settings>
+    <project_name>Cvte.Windows.Controls.Charts</project_name>
+    <csproj_name>Cvte.Windows.Controls.Charts</csproj_name>
+    <package_authors>wuyihu</package_authors>
+    <package_projecturl>http://x.gz.cvte.cn/iip-win/cvte-windows-controls-charts</package_projecturl>
+    <package_description>提供一系列图表控件</package_description>
+</settings>
