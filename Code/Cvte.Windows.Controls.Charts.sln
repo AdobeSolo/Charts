@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cvte.Windows.Controls.Charts", "Cvte.Windows.Controls.Charts\Cvte.Windows.Controls.Charts.csproj", "{81847F1B-EFCC-422E-8F26-F1E98D3AA505}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cvte.Windows.Controls.Chart.Example", "Cvte.Windows.Controls.ChartsDemo\Cvte.Windows.Controls.Chart.Example.csproj", "{9B7375D8-A10D-45B0-8523-C31E5B2EF7FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cvte.Windows.Controls.Chart", "Cvte.Windows.Controls.Chart\Cvte.Windows.Controls.Chart.csproj", "{A2052C82-9004-4B16-83B5-77535667E33A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{81847F1B-EFCC-422E-8F26-F1E98D3AA505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81847F1B-EFCC-422E-8F26-F1E98D3AA505}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81847F1B-EFCC-422E-8F26-F1E98D3AA505}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81847F1B-EFCC-422E-8F26-F1E98D3AA505}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7375D8-A10D-45B0-8523-C31E5B2EF7FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7375D8-A10D-45B0-8523-C31E5B2EF7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7375D8-A10D-45B0-8523-C31E5B2EF7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7375D8-A10D-45B0-8523-C31E5B2EF7FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2052C82-9004-4B16-83B5-77535667E33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2052C82-9004-4B16-83B5-77535667E33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2052C82-9004-4B16-83B5-77535667E33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2052C82-9004-4B16-83B5-77535667E33A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

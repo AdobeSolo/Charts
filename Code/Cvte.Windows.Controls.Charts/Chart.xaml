@@ -1,0 +1,326 @@
+﻿<UserControl x:Class="Cvte.Windows.Controls.Charts.Chart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:charts="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="Chart_OnLoaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical">
+            <TextBlock FontSize="26"
+                       Name="ChartTitle"
+                       FontWeight="Light" 
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="20"
+                       TextAlignment="Center " 
+                       FontFamily="Microsoft Yahei" 
+                       Foreground="#1b1b1b"/>
+
+
+            <TextBlock FontSize="26" 
+                       Name="ChartTip"
+                       FontWeight="Light" 
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin=" 0 0 0 20"
+                       TextAlignment="Center " 
+                       FontFamily="Microsoft Yahei" 
+                       Foreground="#a0a0a0"/>
+
+        </StackPanel>
+
+
+        <charts:Chart x:Name="VisifireChart"
+                      Background="Transparent"
+                      Grid.Row="1"
+                      View3D="False"
+                      BorderThickness="0"
+                      ShadowEnabled="False"
+                      AnimationEnabled="False"
+                      Theme="Theme2"
+                      ToolTipEnabled="False"
+                      IndicatorEnabled="False"
+                      LightingEnabled="False"
+                      DataPointWidth="5.8"
+                      Loaded="VisifireChart_OnLoaded">
+
+            <charts:Chart.PlotArea>
+                <charts:PlotArea ShadowEnabled="False"
+                                 x:Name="PlotArea"></charts:PlotArea>
+            </charts:Chart.PlotArea>
+
+            <charts:Chart.AxesY>
+                <charts:Axis ValueFormatString="#0%"
+                             x:Name="AxisY"
+                             LineThickness="0"
+                             TitleFontColor="#aaaaaa"
+                             TitleFontSize="20"
+                             Interval="0.2"
+                             AxisMaximum="1.18">
+                    <charts:Axis.AxisLabels>
+                        <charts:AxisLabels FontWeight="Light" 
+                                           FontSize="20"
+                                           FontFamily="Microsoft Yahei" 
+                                           FontColor="#1b1b1b" />
+                    </charts:Axis.AxisLabels>
+
+                    <!--隐藏刻度-->
+                    <charts:Axis.Ticks>
+                        <charts:Ticks  LineColor="Transparent"></charts:Ticks>
+                    </charts:Axis.Ticks>
+
+                    <!--设置虚线-->
+                    <charts:Axis.Grids>
+                        <charts:ChartGrid LineStyle="Dashed"></charts:ChartGrid>
+                    </charts:Axis.Grids>
+                </charts:Axis>
+            </charts:Chart.AxesY>
+
+            <charts:Chart.AxesX >
+                <charts:Axis x:Name="AxisX"
+                             TitleFontColor="#aaaaaa"
+                             TitleFontSize="20">
+                    <!--设置X轴的字体等属性-->
+                    <charts:Axis.AxisLabels>
+                        <charts:AxisLabels  FontWeight="Light" 
+                                            FontSize="24"
+                                            FontFamily="Microsoft Yahei" 
+                                            FontColor="#1b1b1b"/>
+                    </charts:Axis.AxisLabels>
+
+                    <!--隐藏刻度-->
+                    <charts:Axis.Ticks>
+                        <charts:Ticks  LineColor="Transparent"></charts:Ticks>
+                    </charts:Axis.Ticks>
+                </charts:Axis>
+
+            </charts:Chart.AxesX>
+
+            <charts:Chart.Legends>
+                <charts:Legend HorizontalAlignment="Right" 
+                               VerticalAlignment="Center" 
+                               Padding="0 0 200 0" 
+                               DockInsidePlotArea="True"
+                               EntryMargin="10"
+                               ShadowEnabled="False" 
+                               BorderColor="Transparent"
+                               BorderThickness="0"
+                               LightingEnabled="False" 
+                               FontWeight="Light" 
+                               FontSize="22"
+                               FontFamily="Microsoft Yahei" 
+                               FontColor="#1b1b1b" 
+                               Background="Transparent" />
+            </charts:Chart.Legends>
+
+
+            <charts:Chart.Series>
+                <charts:DataSeries x:Name="DataSeries"
+                                   MouseLeftButtonDown="DataSeries_OnMouseLeftButtonDown"
+                                   PercentageFormatString="#0.00"
+                                   LabelFontColor="#1b1b1b" 
+                                   LabelFontSize="26"
+                                   LabelLineThickness="2"
+                                   LabelEnabled="True"
+                                   LabelLineColor="#1b1b1b"
+                                   LabelStyle="OutSide"
+                                   LabelFontFamily="Microsoft Yahei"
+                                   LabelFontWeight="Regular">
+                    <charts:DataSeries.DataMappings>
+                        <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
+                        <charts:DataMapping MemberName="YValue" Path="Value"/>
+                        <charts:DataMapping MemberName="LabelText" Path="Tag"/>
+                        <charts:DataMapping MemberName="Color" Path="Color"/>
+                    </charts:DataSeries.DataMappings>
+                </charts:DataSeries>
+            </charts:Chart.Series>
+        </charts:Chart>
+
+
+
+        <charts:Chart x:Name="CorrectChart"
+                      Background="Transparent"
+                      Grid.Row="1"
+                      View3D="False"
+                      BorderThickness="0"
+                      ShadowEnabled="False"
+                      AnimationEnabled="False"
+                      Theme="Theme2"
+                      ToolTipEnabled="False"
+                      IndicatorEnabled="False"
+                      LightingEnabled="False"
+                      DataPointWidth="5.8"
+                      Loaded="CorrectChart_OnLoaded">
+
+            <!--消除图表阴影-->
+            <charts:Chart.PlotArea>
+                <charts:PlotArea ShadowEnabled="False"
+                                 x:Name="CorrectPlotArea"></charts:PlotArea>
+            </charts:Chart.PlotArea>
+
+            <charts:Chart.AxesY>
+                <charts:Axis ValueFormatString="#0%"
+                             x:Name="CorrectAxisY"
+                             LineThickness="0"
+                             TitleFontColor="#aaaaaa"
+                             TitleFontSize="20"
+                             Interval="0.2"
+                             AxisMaximum="1.18">
+                    <charts:Axis.AxisLabels>
+                        <charts:AxisLabels FontWeight="Light" 
+                                           FontSize="20"
+                                           FontFamily="Microsoft Yahei" 
+                                           FontColor="#1b1b1b" />
+                    </charts:Axis.AxisLabels>
+
+                    <!--隐藏刻度-->
+                    <charts:Axis.Ticks>
+                        <charts:Ticks  LineColor="Transparent"></charts:Ticks>
+                    </charts:Axis.Ticks>
+
+                    <!--设置虚线-->
+                    <charts:Axis.Grids>
+                        <charts:ChartGrid LineStyle="Dashed"></charts:ChartGrid>
+                    </charts:Axis.Grids>
+                </charts:Axis>
+            </charts:Chart.AxesY>
+
+            <charts:Chart.AxesX >
+                <charts:Axis x:Name="CorrectAxisX"
+                             TitleFontColor="#aaaaaa"
+                             TitleFontSize="20">
+                    <!--设置X轴的字体等属性-->
+                    <charts:Axis.AxisLabels>
+                        <charts:AxisLabels  FontWeight="Light" 
+                                            FontSize="24"
+                                            FontFamily="Microsoft Yahei" 
+                                            FontColor="#1b1b1b"/>
+                    </charts:Axis.AxisLabels>
+
+                    <!--隐藏刻度-->
+                    <charts:Axis.Ticks>
+                        <charts:Ticks  LineColor="Transparent"></charts:Ticks>
+                    </charts:Axis.Ticks>
+                </charts:Axis>
+
+            </charts:Chart.AxesX>
+
+            <charts:Chart.Legends>
+                <charts:Legend HorizontalAlignment="Right" 
+                               VerticalAlignment="Center" 
+                               Padding="0 0 200 0" 
+                               DockInsidePlotArea="True"
+                               EntryMargin="10"
+                               ShadowEnabled="False" 
+                               BorderColor="Transparent"
+                               BorderThickness="0"
+                               LightingEnabled="False" 
+                               FontWeight="Light" 
+                               FontSize="22"
+                               FontFamily="Microsoft Yahei" 
+                               FontColor="#1b1b1b" 
+                               Background="Transparent" />
+            </charts:Chart.Legends>
+
+
+            <charts:Chart.Series>
+                <charts:DataSeries x:Name="CorrectDataSeries"
+                                   MouseLeftButtonDown="DataSeries_OnMouseLeftButtonDown"
+                                   PercentageFormatString="#0.00"
+                                   LabelFontColor="#1b1b1b" 
+                                   LabelFontSize="26"
+                                   LabelLineThickness="2"
+                                   LabelEnabled="True"
+                                   LabelLineColor="#1b1b1b"
+                                   LabelStyle="OutSide"
+                                   LabelFontFamily="Microsoft Yahei"
+                                   LabelFontWeight="Regular">
+                    <charts:DataSeries.DataMappings>
+                        <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
+                        <charts:DataMapping MemberName="YValue" Path="Value"/>
+                        <charts:DataMapping MemberName="LabelText" Path="Tag"/>
+                        <charts:DataMapping MemberName="Color" Path="Color"/>
+                    </charts:DataSeries.DataMappings>
+                </charts:DataSeries>
+            </charts:Chart.Series>
+        </charts:Chart>
+        
+        <Popup x:Name="Popup"
+               AllowsTransparency="True"
+               Opened="Popup_OnOpened"
+               Placement="MousePoint"
+               PlacementTarget="{Binding ElementName=VisifireChart}"
+               StaysOpen="False"
+               VerticalOffset="-35"
+               Height="50"
+               Width="150"
+               IsOpen="False">
+            <Grid x:Name="PopupGrid">
+                <Border CornerRadius="5"
+                        Margin="19 0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Background="#eaeaea"
+                        Opacity="0.86"
+                        BorderThickness="1"
+                        BorderBrush="#a0a0a0">
+                </Border>
+                <ListBox x:Name="Detials"
+                         BorderThickness="0"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Background="Transparent">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Loaded="FrameworkElement_OnLoaded"
+                                       Margin=" 15 5"
+                                       ItemWidth="100"
+                                       ItemHeight="40"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"
+                                       Margin="5 5 5 0"
+                                       Width="90"
+                                       Height="40"
+                                       TextTrimming="CharacterEllipsis"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       TextAlignment="Center"
+                                       Foreground="#1b1b1b"
+                                       FontSize="20"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Image x:Name="LeftArrow"
+                       Width="20"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Margin="0 10"
+                       Source="/Images/Arrow_Left.png"
+                       Stretch="Uniform"></Image>
+
+                <Image x:Name="RightArrow"
+                       Width="20"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom"
+                       Margin="0 10"
+                       Source="/Images/Arrow_Right.png"
+                       Stretch="Uniform"></Image>
+
+            </Grid>
+        </Popup>
+    </Grid>
+</UserControl>
