@@ -38,6 +38,7 @@
                      LabelFontSize="26"
                      LabelFontWeight="Light"
                      LabelForeground="DeepSkyBlue"
+                     DataPointWidth="20"
                      ></chart:Chart>
     </Grid>
 </Window>

@@ -16,6 +16,8 @@ namespace Cvte.Windows.Controls.Chart
 
         public Brush SelectedColor { get; set; }
 
+        public string Label { get; set; }
+
         public object Tag { get; set; }
 
         public IList<string> Details { get; set; }

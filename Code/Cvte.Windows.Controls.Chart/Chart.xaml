@@ -6,14 +6,16 @@
              xmlns:charts="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             Loaded="Chart_OnLoaded">
+             Loaded="Chart_OnLoaded"
+             SizeChanged="Chart_OnSizeChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical"
+                    x:Name="SPTitle">
             <TextBlock FontSize="26"
                        Name="ChartTitle"
                        FontWeight="Light" 
@@ -136,7 +138,7 @@
                     <charts:DataSeries.DataMappings>
                         <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
                         <charts:DataMapping MemberName="YValue" Path="Value"/>
-                        <charts:DataMapping MemberName="LabelText" Path="Tag"/>
+                        <charts:DataMapping MemberName="LabelText" Path="Label"/>
                         <charts:DataMapping MemberName="Color" Path="Color"/>
                     </charts:DataSeries.DataMappings>
                 </charts:DataSeries>
@@ -247,7 +249,7 @@
                     <charts:DataSeries.DataMappings>
                         <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
                         <charts:DataMapping MemberName="YValue" Path="Value"/>
-                        <charts:DataMapping MemberName="LabelText" Path="Tag"/>
+                        <charts:DataMapping MemberName="LabelText" Path="Label"/>
                         <charts:DataMapping MemberName="Color" Path="Color"/>
                     </charts:DataSeries.DataMappings>
                 </charts:DataSeries>

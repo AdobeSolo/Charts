@@ -116,6 +116,36 @@ namespace Cvte.Windows.Controls.Chart
 
         #region Title
 
+        public static readonly DependencyProperty TitleEnabledProperty = DependencyProperty.Register(
+ "TitleEnabled",
+ typeof(bool),
+ typeof(Chart),
+ new PropertyMetadata(true, TitleEnabledChanged));
+
+        [Bindable(true)]
+        public bool TitleEnabled
+        {
+            get
+            {
+                return (bool)GetValue(TitleEnabledProperty);
+            }
+            set
+            {
+                SetValue(TitleEnabledProperty, value);
+            }
+        }
+
+
+        private static void TitleEnabledChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            var enable = Convert.ToBoolean(args.NewValue.ToString());
+            chart.SPTitle.Visibility = enable?Visibility.Visible:Visibility.Collapsed;
+        }
+
+
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
        "Title",
        typeof(string),
@@ -1179,6 +1209,39 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
         }
         #endregion
 
+
+        #region DataPointWidth
+
+        public static readonly DependencyProperty DataPointWidthProperty = DependencyProperty.Register(
+            "DataPointWidth",
+            typeof (double),
+            typeof (Chart),
+            new PropertyMetadata(60.0, DataPointWidthChanged));
+
+        [Bindable(true)]
+        public double DataPointWidth
+        {
+            get
+            {
+                return (double)GetValue(DataPointWidthProperty);
+            }
+            set
+            {
+                SetValue(DataPointWidthProperty, value);
+            }
+        }
+
+
+        private static void DataPointWidthChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            chart.ChangeDataPointWidth();
+        }
+        #endregion
+
+
         public Chart()
         {
             InitializeComponent();
@@ -1204,9 +1267,21 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             }
             else
             {
-                AxisY.AxisMaximum = 1.2 * maxValue;
+                AxisY.AxisMaximum = 1.18 * maxValue;
                 AxisY.Interval = maxValue / 5;
                 AxisY.ValueFormatString = "#";
+            }
+        }
+
+        private  void ChangeDataPointWidth()
+        {
+            if (PlotArea.ActualWidth > 0 && !double.IsNaN(PlotArea.ActualWidth))
+            {
+                VisifireChart.DataPointWidth = DataPointWidth / PlotArea.ActualWidth * 100;
+            }
+            if (CorrectPlotArea.ActualWidth > 0 && !double.IsNaN(CorrectPlotArea.ActualWidth))
+            {
+                CorrectChart.DataPointWidth = DataPointWidth / CorrectPlotArea.ActualWidth * 100;
             }
         }
 
@@ -1216,15 +1291,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             chart.DataSeries.ShowInLegend = chart.RenderMode == RenderMode.Pie;
             chart.CorrectDataSeries.LabelEnabled = chart.RenderMode != RenderMode.Pie;
             chart.CorrectDataSeries.ShowInLegend = chart.RenderMode == RenderMode.Pie;
-
-            if (chart.PlotArea.ActualWidth > 0 && !double.IsNaN(chart.PlotArea.ActualWidth))
-            {
-                chart.VisifireChart.DataPointWidth = 60 / chart.PlotArea.ActualWidth * 100;
-            }
-            if (chart.CorrectPlotArea.ActualWidth > 0 && !double.IsNaN(chart.CorrectPlotArea.ActualWidth))
-            {
-                chart.CorrectChart.DataPointWidth = 60 / chart.CorrectPlotArea.ActualWidth * 100;
-            }
+            chart.ChangeDataPointWidth();
 
             chart.DataSeries.DataSource = dataSource;
             chart.CorrectDataSeries.DataSource = dataSource;
@@ -1243,6 +1310,11 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
                 chart.CorrectChart.Visibility = Visibility.Collapsed;
                 chart.VisifireChart.Visibility = Visibility.Visible;
             }
+        }
+
+        private void Chart_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ChangeDataPointWidth();
         }
 
         void Chart_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -1364,7 +1436,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             public int X;
             public int Y;
         }
-
+    
     }
 
      /// <summary>
