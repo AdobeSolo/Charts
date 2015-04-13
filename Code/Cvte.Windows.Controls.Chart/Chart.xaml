@@ -58,13 +58,10 @@
             </charts:Chart.PlotArea>
 
             <charts:Chart.AxesY>
-                <charts:Axis ValueFormatString="#0%"
-                             x:Name="AxisY"
+                <charts:Axis x:Name="AxisY"
                              LineThickness="0"
                              TitleFontColor="#aaaaaa"
-                             TitleFontSize="20"
-                             Interval="0.2"
-                             AxisMaximum="1.18">
+                             TitleFontSize="20">
                     <charts:Axis.AxisLabels>
                         <charts:AxisLabels x:Name="AxisYLabels"
                                            FontWeight="Light" 

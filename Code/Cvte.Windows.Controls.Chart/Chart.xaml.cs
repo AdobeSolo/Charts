@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -88,6 +87,7 @@ namespace Cvte.Windows.Controls.Chart
            
             if(dataSource == null) return;
             UpdateDataSource(chart,dataSource);
+            chart.SetAxisYValue(dataSource);
         }
 
         #endregion
@@ -986,6 +986,162 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), AxisXTitleFontFamilyChan
         }
         #endregion
 
+        #region Label
+        public static readonly DependencyProperty LabelEnabledProperty = DependencyProperty.Register(
+   "LabelEnabled",
+   typeof(bool),
+   typeof(Chart),
+   new PropertyMetadata(true, LabelEnabledChanged));
+
+        [Bindable(true)]
+        public bool LabelEnabled
+        {
+            get
+            {
+                return (bool)GetValue(LabelEnabledProperty);
+            }
+            set
+            {
+                SetValue(LabelEnabledProperty, value);
+            }
+        }
+
+
+        private static void LabelEnabledChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            var enable = Convert.ToBoolean(args.NewValue.ToString());
+            chart.DataSeries.LabelEnabled = enable;
+            chart.CorrectDataSeries.LabelEnabled = enable;
+        }
+
+        public static readonly DependencyProperty LabelFontFamilyProperty = DependencyProperty.Register(
+"LabelFontFamily",
+typeof(FontFamily),
+typeof(Chart),
+new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged));
+
+        [Bindable(true)]
+        public FontFamily LabelFontFamily
+        {
+            get
+            {
+                return (FontFamily)GetValue(LabelFontFamilyProperty);
+            }
+            set
+            {
+                SetValue(LabelFontFamilyProperty, value);
+            }
+        }
+
+
+        private static void LabelFontFamilyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            var fontFamily = new FontFamily(args.NewValue.ToString());
+            chart.DataSeries.LabelFontFamily = fontFamily;
+            chart.CorrectDataSeries.LabelFontFamily = fontFamily;
+        }
+
+
+        public static readonly DependencyProperty LabelFontWeightProperty = DependencyProperty.Register(
+     "LabelFontWeight",
+     typeof(FontWeight),
+     typeof(Chart),
+     new PropertyMetadata(FontWeights.Light, LabelFontWeightChanged));
+
+        [Bindable(true)]
+        public FontWeight LabelFontWeight
+        {
+            get
+            {
+                return (FontWeight)GetValue(LabelFontWeightProperty);
+            }
+            set
+            {
+                SetValue(LabelFontWeightProperty, value);
+            }
+        }
+
+
+        private static void LabelFontWeightChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            // ReSharper disable once PossibleNullReferenceException
+            var fontWeight = (FontWeight)new FontWeightConverter().ConvertFromString(args.NewValue.ToString());
+            chart.DataSeries.LabelFontWeight = fontWeight;
+            chart.CorrectDataSeries.LabelFontWeight = fontWeight;
+        }
+
+        public static readonly DependencyProperty LabelFontSizeProperty = DependencyProperty.Register(
+     "LabelFontSize",
+     typeof(double),
+     typeof(Chart),
+     new PropertyMetadata(26.0, LabelFontSizeChanged));
+
+        [Bindable(true)]
+        public double LabelFontSize
+        {
+            get
+            {
+                return (double)GetValue(LabelFontSizeProperty);
+            }
+            set
+            {
+                SetValue(LabelFontSizeProperty, value);
+            }
+        }
+
+
+        private static void LabelFontSizeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            double fontsize;
+            double.TryParse(args.NewValue.ToString(), out fontsize);
+            chart.DataSeries.LabelFontSize = fontsize;
+            chart.CorrectDataSeries.LabelFontSize = fontsize;
+        }
+
+        public static readonly DependencyProperty LabelForegroundProperty = DependencyProperty.Register(
+   "LabelForeground",
+   typeof(Color),
+   typeof(Chart),
+   new PropertyMetadata(Colors.Black, LabelForegroundChanged));
+
+        [Bindable(true)]
+        public Color LabelForeground
+        {
+            get
+            {
+                return (Color)GetValue(LabelForegroundProperty);
+            }
+            set
+            {
+                SetValue(LabelForegroundProperty, value);
+            }
+        }
+
+
+        private static void LabelForegroundChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            // ReSharper disable once PossibleNullReferenceException
+            var foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(args.NewValue.ToString()));
+            chart.DataSeries.LabelFontColor = foreground;
+            chart.CorrectDataSeries.LabelFontColor = foreground;
+        }
+        #endregion
+
         #region RenderMode
         public static readonly DependencyProperty RenderModeProperty = DependencyProperty.Register(
       "RenderMode",
@@ -1028,19 +1184,39 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), AxisXTitleFontFamilyChan
             InitializeComponent();
         }
 
+        private void SetAxisYValue(IEnumerable<ChartItem> dataSource)
+        {
+            double maxValue = 0;
+            double minValue = 0;
+            foreach (var chartItem in dataSource)
+            {
+                maxValue = Math.Max(maxValue, chartItem.Value);
+                if (Math.Abs(chartItem.Value) > 0)
+                {
+                    minValue = Math.Max(minValue, chartItem.Value);
+                }
+            }
+            if (0 < minValue && minValue < 1 && maxValue <= 1)
+            {
+                AxisY.AxisMaximum = 1.18;
+                AxisY.Interval = 0.2;
+                AxisY.ValueFormatString =  "#0%";
+            }
+            else
+            {
+                AxisY.AxisMaximum = 1.2 * maxValue;
+                AxisY.Interval = maxValue / 5;
+                AxisY.ValueFormatString = "#";
+            }
+        }
+
         private static void UpdateDataSource(Chart chart, IList<ChartItem> dataSource)
         {
             chart.DataSeries.LabelEnabled = chart.RenderMode != RenderMode.Pie;
             chart.DataSeries.ShowInLegend = chart.RenderMode == RenderMode.Pie;
             chart.CorrectDataSeries.LabelEnabled = chart.RenderMode != RenderMode.Pie;
             chart.CorrectDataSeries.ShowInLegend = chart.RenderMode == RenderMode.Pie;
-            foreach (var chartItem in dataSource)
-            {
-                //设置Label
-                chartItem.Tag = chartItem.Details.Count == 0 && chart.RenderMode == RenderMode.Column
-                    ? " "
-                    : chartItem.Details.Count.ToString(CultureInfo.InvariantCulture);
-            }
+
             if (chart.PlotArea.ActualWidth > 0 && !double.IsNaN(chart.PlotArea.ActualWidth))
             {
                 chart.VisifireChart.DataPointWidth = 60 / chart.PlotArea.ActualWidth * 100;

@@ -27,7 +27,7 @@ namespace Cvte.Windows.Controls.ChartsDemo
             items.Add(new ChartItem
             {
                 Name = "A",
-                Value = 5,
+                Value = 0.6,
                 Tag = "A",
                 Color = new SolidColorBrush(Colors.Red)
             });
@@ -35,7 +35,7 @@ namespace Cvte.Windows.Controls.ChartsDemo
             items.Add(new ChartItem
             {
                 Name = "B",
-                Value = 5,
+                Value = 0.2,
                 Tag = "B",
                 Color = new SolidColorBrush(Colors.Yellow)
             });
@@ -43,7 +43,7 @@ namespace Cvte.Windows.Controls.ChartsDemo
             items.Add(new ChartItem
             {
                 Name = "C",
-                Value = 5,
+                Value = 0.1,
                 Tag = "C",
                 Color = new SolidColorBrush(Colors.Green)
             });
@@ -51,7 +51,7 @@ namespace Cvte.Windows.Controls.ChartsDemo
             items.Add(new ChartItem
             {
                 Name = "D",
-                Value = 5,
+                Value = 0.3,
                 Tag = "D",
                 Color = new SolidColorBrush(Colors.Blue)
             });
@@ -59,7 +59,7 @@ namespace Cvte.Windows.Controls.ChartsDemo
             items.Add(new ChartItem
             {
                 Name = "E",
-                Value = 5,
+                Value = 0.8,
                 Tag = "E",
                 Color = new SolidColorBrush(Colors.DarkMagenta)
             });

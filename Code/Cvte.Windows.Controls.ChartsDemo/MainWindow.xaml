@@ -32,6 +32,12 @@
                      AxisYLabelsFontFamily="Microsoft YaHei"
                      AxisYLabelsFontSize="20"
                      AxisYLabelsFontWeight="Bold"
-                     AxisYLabelsForeground="DarkOliveGreen"></chart:Chart>
+                     AxisYLabelsForeground="DarkOliveGreen"
+                     LabelEnabled="True"
+                     LabelFontFamily="KAITI"
+                     LabelFontSize="26"
+                     LabelFontWeight="Light"
+                     LabelForeground="DeepSkyBlue"
+                     ></chart:Chart>
     </Grid>
 </Window>
