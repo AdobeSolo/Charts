@@ -20,6 +20,101 @@ namespace Cvte.Windows.Controls.ChartsDemo
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             SetChartItemSources();
+            SetRangeChartItemSources();
+        }
+
+        private void SetRangeChartItemSources()
+        {
+            IList<RangeChartItem> items = new List<RangeChartItem>();
+            items.Add(new RangeChartItem
+            {
+                Name = "A",
+                Value = 6,
+                Label = "A",
+                Range = 4,
+                Color = new SolidColorBrush(Colors.Red),
+                Details = new List<string>
+                {
+                    "小小明",
+                    "小小明"
+                }
+            });
+
+            items.Add(new RangeChartItem
+            {
+                Name = "B",
+                Value = 13,
+                Range = 7,
+                Label = "B",
+                Color = new SolidColorBrush(Colors.Yellow),
+                Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明"
+                }
+            });
+
+            items.Add(new RangeChartItem
+            {
+                Name = "C",
+                Value = 20,
+                Range = 10,
+                Label = "C",
+                Color = new SolidColorBrush(Colors.Green),
+                Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                }
+            });
+
+            items.Add(new RangeChartItem
+            {
+                Name = "D",
+                Value = 18,
+                Range = 14,
+                Label = "D",
+                Color = new SolidColorBrush(Colors.Blue),
+                Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明",
+                    "小小名明",
+                    "小打小明",
+                    "小小名明",
+                    "小打小明",
+                }
+            });
+
+            items.Add(new RangeChartItem
+            {
+                Name = "E",
+                Value = 4,
+                Range = 20,
+                Label = "E",
+                Color = new SolidColorBrush(Colors.DarkMagenta),
+                Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                }
+            });
+
+            RangeChart.ChartItemSources = items;
         }
 
         private void SetChartItemSources()

@@ -55,4 +55,13 @@ namespace Cvte.Windows.Controls.Chart
             Percent = percent;
         }
     }
+
+    public class RangeChartItem : ChartItem
+    {
+        public int Start { get; set; }
+
+        public int End { get; set; }
+
+        public double Range { get; set; }
+    }
 }

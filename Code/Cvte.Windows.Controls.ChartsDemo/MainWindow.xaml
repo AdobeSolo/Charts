@@ -2,9 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:chart="clr-namespace:Cvte.Windows.Controls.Chart;assembly=Cvte.Windows.Controls.Chart"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow"
+        WindowState="Maximized">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <chart:Chart Name="Chart"
+                     Grid.Column="0"
                      Title="图表测试"
                      Tip="这是对图表进行测试"
                      AxisXTitle="百分比"
@@ -41,7 +47,25 @@
                      DataPointWidth="20"
                      ShowInLegend="True"
                      SelectedItemChanged="Chart_OnSelectedItemChanged"
-                     PopupEnabled="True"
-                     ></chart:Chart>
+                     PopupEnabled="True"></chart:Chart>
+        
+        
+        <chart:RangeChart Grid.Column="1"
+                          x:Name="RangeChart"
+                          Title="区间分布图表"
+                          Tip="这是对区间分布图表进行测试"
+                          AxisXTitle="百分比"
+                          AxisYTitle="选项"
+                          TitleFontFamily="KAITI"
+                          TitleFontSize="50"
+                          TitleFontWeight="Bold"
+                          TitleForeground="Red"
+                          TipFontFamily="Microsoft YaHei"
+                          TipFontSize="20"
+                          TipFontWeight="Light"
+                          TipForeground="Blue"
+                          MaxScore="32"
+                          MinScore="0"
+                          ScoreStep="4"></chart:RangeChart>
     </Grid>
 </Window>

@@ -86,7 +86,7 @@ namespace Cvte.Windows.Controls.Chart
 
            
             if(dataSource == null) return;
-            UpdateDataSource(chart,dataSource);
+            chart.UpdateDataSource(dataSource);
             chart.SetAxisYValue(dataSource);
         }
 
@@ -1205,7 +1205,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             chart.CorrectDataSeries.RenderAs = renderAs;
             var dataSource = chart.ChartItemSources as IList<ChartItem>;
             if (dataSource == null) return;
-            UpdateDataSource(chart,dataSource);
+            chart.UpdateDataSource(dataSource);
         }
         #endregion
 
@@ -1396,7 +1396,6 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         }
         #endregion
 
-
         #region Popup
 
         public static readonly DependencyProperty PopupEnabledProperty = DependencyProperty.Register(
@@ -1464,13 +1463,13 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             }
             else
             {
-                AxisY.AxisMaximum = 1.18 * maxValue;
+                AxisY.AxisMaximum = 1.10 * maxValue;
                 AxisY.Interval = maxValue / 5;
                 AxisY.ValueFormatString = "#";
             }
         }
 
-        private  void ChangeDataPointWidth()
+        private void ChangeDataPointWidth()
         {
             if (PlotArea.ActualWidth > 0 && !double.IsNaN(PlotArea.ActualWidth))
             {
@@ -1482,23 +1481,32 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             }
         }
 
-        private static void UpdateDataSource(Chart chart, IList<ChartItem> dataSource)
+        private void UpdateDataSource(IList<ChartItem> dataSource)
         {
-            chart.ChangeDataPointWidth();
-            chart.DataSeries.DataSource = dataSource;
-            chart.CorrectDataSeries.DataSource = dataSource;
+            ChangeDataPointWidth();
+            UpdateChartSource(dataSource);
+            ExchangedChart(dataSource);
+        }
 
+        protected virtual void UpdateChartSource(IList<ChartItem> dataSource)
+        {
+            DataSeries.DataSource = dataSource;
+            CorrectDataSeries.DataSource = dataSource;
+        }
+
+        private void ExchangedChart(IList<ChartItem> dataSource)
+        {
             //TODO WUYIHU 判断题与选择题的图表统一
             //在判断题与选择题之间切换时，图表的dataSource已经更新,但是有时候AxisXLabel没有更新因此专门用CorrectChart图表显示判断题。
             if (dataSource.Count == 2)
             {
-                chart.CorrectChart.Visibility = Visibility.Visible;
-                chart.VisifireChart.Visibility = Visibility.Collapsed;
+                CorrectChart.Visibility = Visibility.Visible;
+                VisifireChart.Visibility = Visibility.Collapsed;
             }
             else
             {
-                chart.CorrectChart.Visibility = Visibility.Collapsed;
-                chart.VisifireChart.Visibility = Visibility.Visible;
+                CorrectChart.Visibility = Visibility.Collapsed;
+                VisifireChart.Visibility = Visibility.Visible;
             }
         }
 
@@ -1529,7 +1537,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             Enum.TryParse(RenderMode.ToString(), out renderAs);
             DataSeries.RenderAs = renderAs;
             CorrectDataSeries.RenderAs = renderAs;
-            UpdateDataSource(this, ChartItemSources.ToList());
+            UpdateDataSource(ChartItemSources.ToList());
         }
 
 
@@ -1559,43 +1567,12 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         private void Popup_OnOpened(object sender, EventArgs e)
         {
             if (!PopupGrid.IsVisible) return;
-            if (Detials.Items.Count <= 3)
-            {
-                Popup.Width = 150;
-                WrapPanel.Width = 100;
-            }
-            else if (Detials.Items.Count <=6)
-            {
-                Popup.Width = 250;
-                WrapPanel.Width = 200;
-            }
-            else
-            {
-                Popup.Width = 350;
-                WrapPanel.Width = 300;
-            }
-            
-            if (Detials.Items.Count == 1)
-            {
-                Popup.Height = 60;
-                WrapPanel.Height = 40;
-            }
-            else if (Detials.Items.Count == 2 || Detials.Items.Count == 4)
-            {
-                Popup.Height = 100;
-                WrapPanel.Height = 80;
-            }
-            else if(Detials.Items.Count <= 9)
-            {
-                Popup.Height = 140;
-                WrapPanel.Height = 120;
-            }
-            else
-            {
-                Popup.Height = 140;
-                WrapPanel.Height = 40 * Math.Ceiling((double)Detials.Items.Count/3);
-            }
+            SetPopupSize();
+            SetPopupLocation();
+        }
 
+        private void SetPopupLocation()
+        {
             POINT point;
             if (GetCursorPos(out point))
             {
@@ -1612,7 +1589,46 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
                     Popup.HorizontalOffset = 0;
                 }
                 Popup.VerticalOffset = 25 - Popup.Height;
-            
+            }
+        }
+
+        private void SetPopupSize()
+        {
+            if (Detials.Items.Count <= 3)
+            {
+                Popup.Width = 150;
+                WrapPanel.Width = 100;
+            }
+            else if (Detials.Items.Count <= 6)
+            {
+                Popup.Width = 250;
+                WrapPanel.Width = 200;
+            }
+            else
+            {
+                Popup.Width = 350;
+                WrapPanel.Width = 300;
+            }
+
+            if (Detials.Items.Count == 1)
+            {
+                Popup.Height = 60;
+                WrapPanel.Height = 40;
+            }
+            else if (Detials.Items.Count == 2 || Detials.Items.Count == 4)
+            {
+                Popup.Height = 100;
+                WrapPanel.Height = 80;
+            }
+            else if (Detials.Items.Count <= 9)
+            {
+                Popup.Height = 140;
+                WrapPanel.Height = 120;
+            }
+            else
+            {
+                Popup.Height = 140;
+                WrapPanel.Height = 40*Math.Ceiling((double) Detials.Items.Count/3);
             }
         }
 
