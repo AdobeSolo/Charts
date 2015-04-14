@@ -1441,6 +1441,32 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         public Chart()
         {
             InitializeComponent();
+// ReSharper disable once DoNotCallOverridableMethodsInConstructor
+            InitDataMappings();
+        }
+
+        protected virtual void InitDataMappings()
+        {
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = "AxisXLabel",
+                Path = "Name"
+            });
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = "YValue",
+                Path = "Value"
+            });
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = "LabelText",
+                Path = "Label"
+            });
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = "Color",
+                Path = "Color"
+            });
         }
 
         private void SetAxisYValue(IEnumerable<ChartItem> dataSource)

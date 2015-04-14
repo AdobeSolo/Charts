@@ -80,17 +80,38 @@ namespace Cvte.Windows.Controls.Chart
 
         public RangeChart()
         {
+            AxisX.AxisMinimum = 0;
+        }
+
+        protected override void InitDataMappings()
+        {
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = "AxisXLabel",
+                Path = "Name"
+            });
+
             DataSeries.DataMappings.Add(new DataMapping
             {
                 MemberName = "XValue",
                 Path = "Range"
+            });
+
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = "YValue",
+                Path = "Value"
             });
             DataSeries.DataMappings.Add(new DataMapping
             {
                 MemberName = "LabelText",
                 Path = "Value"
             });
-            AxisX.AxisMinimum = 0;
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = "Color",
+                Path = "Color"
+            });
         }
 
         protected override void UpdateChartSource(IList<ChartItem> dataSource)
