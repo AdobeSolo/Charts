@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using Cvte.Windows.Controls.Chart;
@@ -8,7 +9,7 @@ namespace Cvte.Windows.Controls.ChartsDemo
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow 
     {
         public MainWindow()
         {
@@ -29,7 +30,12 @@ namespace Cvte.Windows.Controls.ChartsDemo
                 Name = "A",
                 Value = 0.6,
                 Label = "A",
-                Color = new SolidColorBrush(Colors.Red)
+                Color = new SolidColorBrush(Colors.Red),
+                Details = new List<string>
+                {
+                    "小小明",
+                    "小小明"
+                }
             });
 
             items.Add(new ChartItem
@@ -37,7 +43,12 @@ namespace Cvte.Windows.Controls.ChartsDemo
                 Name = "B",
                 Value = 0.2,
                 Label = "B",
-                Color = new SolidColorBrush(Colors.Yellow)
+                Color = new SolidColorBrush(Colors.Yellow),
+                 Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明"
+                }
             });
 
             items.Add(new ChartItem
@@ -45,7 +56,20 @@ namespace Cvte.Windows.Controls.ChartsDemo
                 Name = "C",
                 Value = 0.1,
                 Label = "C",
-                Color = new SolidColorBrush(Colors.Green)
+                Color = new SolidColorBrush(Colors.Green),
+                Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                }
             });
 
             items.Add(new ChartItem
@@ -53,7 +77,16 @@ namespace Cvte.Windows.Controls.ChartsDemo
                 Name = "D",
                 Value = 0.3,
                 Label = "D",
-                Color = new SolidColorBrush(Colors.Blue)
+                Color = new SolidColorBrush(Colors.Blue),
+                Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明",
+                    "小小名明",
+                    "小打小明",
+                    "小小名明",
+                    "小打小明",
+                }
             });
 
             items.Add(new ChartItem
@@ -61,10 +94,27 @@ namespace Cvte.Windows.Controls.ChartsDemo
                 Name = "E",
                 Value = 0.8,
                 Label = "E",
-                Color = new SolidColorBrush(Colors.DarkMagenta)
+                Color = new SolidColorBrush(Colors.DarkMagenta),
+                Details = new List<string>
+                {
+                    "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                     "小小名明",
+                    "小打小明",
+                }
             });
 
             Chart.ChartItemSources = items;
+        }
+
+        private void Chart_OnSelectedItemChanged(object sender, RoutedEventArgs e)
+        {
+            var chartItem = ((SelectedItemRoutedEventArgs)e).SelectedValue;
+            Console.WriteLine(chartItem.Name);
         }
     }
 }

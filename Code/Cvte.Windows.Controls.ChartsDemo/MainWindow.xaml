@@ -39,6 +39,9 @@
                      LabelFontWeight="Light"
                      LabelForeground="DeepSkyBlue"
                      DataPointWidth="20"
+                     ShowInLegend="True"
+                     SelectedItemChanged="Chart_OnSelectedItemChanged"
+                     PopupEnabled="True"
                      ></chart:Chart>
     </Grid>
 </Window>

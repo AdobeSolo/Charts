@@ -646,7 +646,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), AxisYLabelsFontFamilyCha
      "AxisYLabelsFontSize",
      typeof(double),
      typeof(Chart),
-     new PropertyMetadata(26.0, AxisYTitleFontSizeChanged));
+     new PropertyMetadata(26.0, AxisYLabelsFontSizeChanged));
 
         [Bindable(true)]
         public double AxisYLabelsFontSize
@@ -1209,6 +1209,161 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
         }
         #endregion
 
+        #region Legend
+        public static readonly DependencyProperty ShowInLegendProperty = DependencyProperty.Register(
+   "ShowInLegend",
+   typeof(bool),
+   typeof(Chart),
+   new PropertyMetadata(true, ShowInLegendChanged));
+
+        [Bindable(true)]
+        public bool ShowInLegend
+        {
+            get
+            {
+                return (bool)GetValue(ShowInLegendProperty);
+            }
+            set
+            {
+                SetValue(ShowInLegendProperty, value);
+            }
+        }
+
+
+        private static void ShowInLegendChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            var enable = Convert.ToBoolean(args.NewValue.ToString());
+            chart.DataSeries.ShowInLegend = enable;
+            chart.CorrectDataSeries.ShowInLegend = enable;
+        }
+
+        public static readonly DependencyProperty LegendFontFamilyProperty = DependencyProperty.Register(
+"LegendFontFamily",
+typeof(FontFamily),
+typeof(Chart),
+new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged));
+
+        [Bindable(true)]
+        public FontFamily LegendFontFamily
+        {
+            get
+            {
+                return (FontFamily)GetValue(LegendFontFamilyProperty);
+            }
+            set
+            {
+                SetValue(LegendFontFamilyProperty, value);
+            }
+        }
+
+
+        private static void LegendFontFamilyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            var fontFamily = new FontFamily(args.NewValue.ToString());
+            chart.Legend.FontFamily = fontFamily;
+            chart.CorrectLegend.FontFamily = fontFamily;
+        }
+
+
+        public static readonly DependencyProperty LegendFontWeightProperty = DependencyProperty.Register(
+     "LegendFontWeight",
+     typeof(FontWeight),
+     typeof(Chart),
+     new PropertyMetadata(FontWeights.Light, LegendFontWeightChanged));
+
+        [Bindable(true)]
+        public FontWeight LegendFontWeight
+        {
+            get
+            {
+                return (FontWeight)GetValue(LegendFontWeightProperty);
+            }
+            set
+            {
+                SetValue(LegendFontWeightProperty, value);
+            }
+        }
+
+
+        private static void LegendFontWeightChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            // ReSharper disable once PossibleNullReferenceException
+            var fontWeight = (FontWeight)new FontWeightConverter().ConvertFromString(args.NewValue.ToString());
+            chart.Legend.FontWeight = fontWeight;
+            chart.CorrectLegend.FontWeight = fontWeight;
+        }
+
+        public static readonly DependencyProperty LegendFontSizeProperty = DependencyProperty.Register(
+     "LegendFontSize",
+     typeof(double),
+     typeof(Chart),
+     new PropertyMetadata(26.0, LegendFontSizeChanged));
+
+        [Bindable(true)]
+        public double LegendFontSize
+        {
+            get
+            {
+                return (double)GetValue(LegendFontSizeProperty);
+            }
+            set
+            {
+                SetValue(LegendFontSizeProperty, value);
+            }
+        }
+
+
+        private static void LegendFontSizeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            double fontsize;
+            double.TryParse(args.NewValue.ToString(), out fontsize);
+            chart.Legend.FontSize = fontsize;
+            chart.CorrectLegend.FontSize = fontsize;
+        }
+
+        public static readonly DependencyProperty LegendForegroundProperty = DependencyProperty.Register(
+   "LegendForeground",
+   typeof(Color),
+   typeof(Chart),
+   new PropertyMetadata(Colors.Black, LegendForegroundChanged));
+
+        [Bindable(true)]
+        public Color LegendForeground
+        {
+            get
+            {
+                return (Color)GetValue(LegendForegroundProperty);
+            }
+            set
+            {
+                SetValue(LegendForegroundProperty, value);
+            }
+        }
+
+
+        private static void LegendForegroundChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            // ReSharper disable once PossibleNullReferenceException
+            var foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(args.NewValue.ToString()));
+            chart.Legend.FontColor = foreground;
+            chart.CorrectLegend.FontColor = foreground;
+        }
+        #endregion
 
         #region DataPointWidth
 
@@ -1216,7 +1371,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             "DataPointWidth",
             typeof (double),
             typeof (Chart),
-            new PropertyMetadata(60.0, DataPointWidthChanged));
+            new PropertyMetadata(20.0, DataPointWidthChanged));
 
         [Bindable(true)]
         public double DataPointWidth
@@ -1241,6 +1396,48 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
         }
         #endregion
 
+
+        #region Popup
+
+        public static readonly DependencyProperty PopupEnabledProperty = DependencyProperty.Register(
+            "PopupEnabled",
+            typeof (bool),
+            typeof (Chart),
+            new PropertyMetadata(true, PopupEnabledChanged));
+
+        [Bindable(true)]
+        public bool PopupEnabled
+        {
+            get
+            {
+                return (bool)GetValue(PopupEnabledProperty);
+            }
+            set
+            {
+                SetValue(PopupEnabledProperty, value);
+            }
+        }
+
+
+        private static void PopupEnabledChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+
+        }
+        #endregion
+
+        #region SelectedItemChanged
+
+        public static readonly RoutedEvent SelectedItemChangedRoutedEvent = EventManager.RegisterRoutedEvent(
+                         "SelectedItemChanged", RoutingStrategy.Bubble, 
+                         typeof(EventHandler<SelectedItemRoutedEventArgs>), typeof(Chart));
+
+        public event RoutedEventHandler SelectedItemChanged
+        {
+            add { AddHandler(SelectedItemChangedRoutedEvent, value); }
+            remove { RemoveHandler(SelectedItemChangedRoutedEvent, value); }
+        }
+
+        #endregion
 
         public Chart()
         {
@@ -1287,16 +1484,9 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
 
         private static void UpdateDataSource(Chart chart, IList<ChartItem> dataSource)
         {
-            chart.DataSeries.LabelEnabled = chart.RenderMode != RenderMode.Pie;
-            chart.DataSeries.ShowInLegend = chart.RenderMode == RenderMode.Pie;
-            chart.CorrectDataSeries.LabelEnabled = chart.RenderMode != RenderMode.Pie;
-            chart.CorrectDataSeries.ShowInLegend = chart.RenderMode == RenderMode.Pie;
             chart.ChangeDataPointWidth();
-
             chart.DataSeries.DataSource = dataSource;
             chart.CorrectDataSeries.DataSource = dataSource;
-            chart.DataSeries.UpdateLayout();
-            chart.CorrectDataSeries.UpdateLayout();
 
             //TODO WUYIHU 判断题与选择题的图表统一
             //在判断题与选择题之间切换时，图表的dataSource已经更新,但是有时候AxisXLabel没有更新因此专门用CorrectChart图表显示判断题。
@@ -1316,15 +1506,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
         {
             ChangeDataPointWidth();
         }
-
-        void Chart_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsVisible)
-            {
-                UpdateDataSource(this, ChartItemSources.ToList());
-            }
-        }
-
+        
         private void DataSeries_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var item = sender as DataPoint;
@@ -1332,8 +1514,13 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             var chartItem = (ChartItem)item.DataContext;
             Detials.ItemsSource = null;
             Detials.ItemsSource = chartItem.Details;
-            Popup.IsOpen = true;
+            Popup.IsOpen = PopupEnabled;
             SelectedValue = item.DataContext as ChartItem;
+            SelectedItemRoutedEventArgs args = new SelectedItemRoutedEventArgs(SelectedItemChangedRoutedEvent,this)
+            {
+                SelectedValue = SelectedValue
+            };
+            RaiseEvent(args);
         }
 
         private void Chart_OnLoaded(object sender, RoutedEventArgs e)
@@ -1409,8 +1596,6 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
                 WrapPanel.Height = 40 * Math.Ceiling((double)Detials.Items.Count/3);
             }
 
-            Popup.VerticalOffset = 25 - Popup.Height;
-
             POINT point;
             if (GetCursorPos(out point))
             {
@@ -1418,16 +1603,20 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
                 {
                     LeftArrow.Visibility = Visibility.Visible;
                     RightArrow.Visibility = Visibility.Collapsed;
+                    Popup.HorizontalOffset = Popup.Width;
                 }
                 else
                 {
                     LeftArrow.Visibility = Visibility.Collapsed;
                     RightArrow.Visibility = Visibility.Visible;
+                    Popup.HorizontalOffset = 0;
                 }
+                Popup.VerticalOffset = 25 - Popup.Height;
+            
             }
         }
 
-         [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern bool GetCursorPos(out POINT pt);
 
         [StructLayout(LayoutKind.Sequential)]
@@ -1436,7 +1625,6 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             public int X;
             public int Y;
         }
-    
     }
 
      /// <summary>
@@ -1468,5 +1656,12 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
         Polar,
         Pyramid,
         QuickLine,
+    }
+
+    public class SelectedItemRoutedEventArgs : RoutedEventArgs
+    {
+        public SelectedItemRoutedEventArgs(RoutedEvent routedEvent, object source) : base(routedEvent, source) { }
+
+        public ChartItem SelectedValue { get; set; }
     }
 }

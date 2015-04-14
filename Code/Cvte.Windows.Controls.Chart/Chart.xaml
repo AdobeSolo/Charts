@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:charts="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
              Loaded="Chart_OnLoaded"
              SizeChanged="Chart_OnSizeChanged">
-    <Grid>
+    <Grid x:Name="Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -51,7 +52,7 @@
                       ToolTipEnabled="False"
                       IndicatorEnabled="False"
                       LightingEnabled="False"
-                      DataPointWidth="5.8"
+                      DataPointWidth="1.2"
                       Loaded="VisifireChart_OnLoaded">
 
             <charts:Chart.PlotArea>
@@ -106,10 +107,10 @@
             </charts:Chart.AxesX>
 
             <charts:Chart.Legends>
-                <charts:Legend HorizontalAlignment="Right" 
-                               VerticalAlignment="Center" 
-                               Padding="0 0 200 0" 
-                               DockInsidePlotArea="True"
+                <charts:Legend x:Name="Legend"
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               DockInsidePlotArea="False"
                                EntryMargin="10"
                                ShadowEnabled="False" 
                                BorderColor="Transparent"
@@ -119,18 +120,24 @@
                                FontSize="22"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
-                               Background="Transparent" />
+                               Background="Red" />
             </charts:Chart.Legends>
 
 
             <charts:Chart.Series>
                 <charts:DataSeries x:Name="DataSeries"
                                    MouseLeftButtonDown="DataSeries_OnMouseLeftButtonDown"
+                                   Bevel="False" 
+                                   Exploded="True"
                                    PercentageFormatString="#0.00"
                                    LabelFontColor="#1b1b1b" 
                                    LabelFontSize="26"
                                    LabelLineThickness="2"
                                    LabelEnabled="True"
+                                   ShowInLegend="False"
+                                   IncludeYValueInLegend="True"
+                                   IncludeDataPointsInLegend="True"
+                                   IncludePercentageInLegend="True"
                                    LabelLineColor="#1b1b1b"
                                    LabelStyle="OutSide"
                                    LabelFontFamily="Microsoft Yahei"
@@ -140,6 +147,7 @@
                         <charts:DataMapping MemberName="YValue" Path="Value"/>
                         <charts:DataMapping MemberName="LabelText" Path="Label"/>
                         <charts:DataMapping MemberName="Color" Path="Color"/>
+                        <charts:DataMapping MemberName="LegendText" Path="Name"/>
                     </charts:DataSeries.DataMappings>
                 </charts:DataSeries>
             </charts:Chart.Series>
@@ -217,9 +225,9 @@
             </charts:Chart.AxesX>
 
             <charts:Chart.Legends>
-                <charts:Legend HorizontalAlignment="Right" 
+                <charts:Legend x:Name="CorrectLegend" 
+                               HorizontalAlignment="Right" 
                                VerticalAlignment="Center" 
-                               Padding="0 0 200 0" 
                                DockInsidePlotArea="True"
                                EntryMargin="10"
                                ShadowEnabled="False" 
@@ -230,7 +238,7 @@
                                FontSize="22"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
-                               Background="Transparent" />
+                               Background="Red" />
             </charts:Chart.Legends>
 
 
@@ -244,6 +252,7 @@
                                    LabelEnabled="True"
                                    LabelLineColor="#1b1b1b"
                                    LabelStyle="OutSide"
+                                   ShowInLegend="True"
                                    LabelFontFamily="Microsoft Yahei"
                                    LabelFontWeight="Regular">
                     <charts:DataSeries.DataMappings>
@@ -260,9 +269,8 @@
                AllowsTransparency="True"
                Opened="Popup_OnOpened"
                Placement="MousePoint"
-               PlacementTarget="{Binding ElementName=VisifireChart}"
+               PlacementTarget="{Binding ElementName=Grid}"
                StaysOpen="False"
-               VerticalOffset="-35"
                Height="50"
                Width="150"
                IsOpen="False">
