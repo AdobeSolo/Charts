@@ -6,6 +6,6 @@
     <package_projecturl>http://x.gz.cvte.cn/iip-win/cvte-windows-controls-charts</package_projecturl>
     <package_description>提供一系列图表控件</package_description>
   <dependencies>
-    <dependency id="WPFVisifire.Charts" version="5.1.3.0" />
+    <dependency id="WPFVisifire.Charts-local" version="5.1.3.0" />
   </dependencies>
 </settings>
