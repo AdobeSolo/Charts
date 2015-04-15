@@ -1445,28 +1445,31 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             InitDataMappings();
         }
 
+        protected void AddItemToDataMapping(string propertyName,string path)
+        {
+            RemoveItemFromDataMapping(propertyName);
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = propertyName,
+                Path = path
+            });
+        }
+
+        protected void RemoveItemFromDataMapping(string propertyName)
+        {
+            foreach (var dataMapping in DataSeries.DataMappings.Where(dataMapping => dataMapping.MemberName.Equals(propertyName)))
+            {
+                DataSeries.DataMappings.Remove(dataMapping);
+                return;
+            }
+        }
+
         protected virtual void InitDataMappings()
         {
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "AxisXLabel",
-                Path = "Name"
-            });
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "YValue",
-                Path = "Value"
-            });
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "LabelText",
-                Path = "Label"
-            });
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "Color",
-                Path = "Color"
-            });
+            AddItemToDataMapping(DataPoint.AxisXLabelProperty.Name,"Name");
+            AddItemToDataMapping(DataPoint.YValueProperty.Name, "Value");
+            AddItemToDataMapping(DataPoint.LabelTextProperty.Name, "Label");
+            AddItemToDataMapping(DataPoint.ColorProperty.Name, "Color");
         }
 
         private void SetAxisYValue(IEnumerable<ChartItem> dataSource)
