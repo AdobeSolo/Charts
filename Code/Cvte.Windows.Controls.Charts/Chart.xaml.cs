@@ -1453,6 +1453,11 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
                 MemberName = propertyName,
                 Path = path
             });
+            CorrectDataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = propertyName,
+                Path = path
+            });
         }
 
         protected void RemoveItemFromDataMapping(string propertyName)
@@ -1460,7 +1465,13 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             foreach (var dataMapping in DataSeries.DataMappings.Where(dataMapping => dataMapping.MemberName.Equals(propertyName)))
             {
                 DataSeries.DataMappings.Remove(dataMapping);
-                return;
+                break;
+            }
+
+            foreach (var dataMapping in CorrectDataSeries.DataMappings.Where(dataMapping => dataMapping.MemberName.Equals(propertyName)))
+            {
+                CorrectDataSeries.DataMappings.Remove(dataMapping);
+                break;
             }
         }
 
