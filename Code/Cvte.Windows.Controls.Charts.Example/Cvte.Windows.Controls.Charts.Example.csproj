@@ -91,7 +91,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cvte.Windows.Controls.Chart\Cvte.Windows.Controls.Charts.csproj">
+    <ProjectReference Include="..\Cvte.Windows.Controls.Charts\Cvte.Windows.Controls.Charts.csproj">
       <Project>{a2052c82-9004-4b16-83b5-77535667e33a}</Project>
       <Name>Cvte.Windows.Controls.Charts</Name>
     </ProjectReference>

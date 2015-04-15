@@ -1,19 +1,44 @@
-﻿<UserControl x:Class="Cvte.Windows.Controls.Charts.Chart"
+﻿<UserControl x:Class="Cvte.Windows.Controls.Chart.Chart"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:charts="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             Loaded="Chart_OnLoaded">
-    <Grid>
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             Loaded="Chart_OnLoaded"
+             SizeChanged="Chart_OnSizeChanged">
+    <UserControl.Resources>
+        <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical"
+                    x:Name="SPTitle">
             <TextBlock FontSize="26"
                        Name="ChartTitle"
                        FontWeight="Light" 
@@ -49,7 +74,7 @@
                       ToolTipEnabled="False"
                       IndicatorEnabled="False"
                       LightingEnabled="False"
-                      DataPointWidth="5.8"
+                      DataPointWidth="1.2"
                       Loaded="VisifireChart_OnLoaded">
 
             <charts:Chart.PlotArea>
@@ -58,15 +83,13 @@
             </charts:Chart.PlotArea>
 
             <charts:Chart.AxesY>
-                <charts:Axis ValueFormatString="#0%"
-                             x:Name="AxisY"
+                <charts:Axis x:Name="AxisY"
                              LineThickness="0"
                              TitleFontColor="#aaaaaa"
-                             TitleFontSize="20"
-                             Interval="0.2"
-                             AxisMaximum="1.18">
+                             TitleFontSize="20">
                     <charts:Axis.AxisLabels>
-                        <charts:AxisLabels FontWeight="Light" 
+                        <charts:AxisLabels x:Name="AxisYLabels"
+                                           FontWeight="Light" 
                                            FontSize="20"
                                            FontFamily="Microsoft Yahei" 
                                            FontColor="#1b1b1b" />
@@ -90,7 +113,8 @@
                              TitleFontSize="20">
                     <!--设置X轴的字体等属性-->
                     <charts:Axis.AxisLabels>
-                        <charts:AxisLabels  FontWeight="Light" 
+                        <charts:AxisLabels  x:Name="AxisXLabels"
+                                            FontWeight="Light" 
                                             FontSize="24"
                                             FontFamily="Microsoft Yahei" 
                                             FontColor="#1b1b1b"/>
@@ -105,17 +129,16 @@
             </charts:Chart.AxesX>
 
             <charts:Chart.Legends>
-                <charts:Legend HorizontalAlignment="Right" 
-                               VerticalAlignment="Center" 
-                               Padding="0 0 200 0" 
-                               DockInsidePlotArea="True"
-                               EntryMargin="10"
+                <charts:Legend x:Name="Legend"
+                               HorizontalAlignment="Right" 
+                               VerticalAlignment="Top" 
+                               DockInsidePlotArea="False"
                                ShadowEnabled="False" 
                                BorderColor="Transparent"
                                BorderThickness="0"
                                LightingEnabled="False" 
                                FontWeight="Light" 
-                               FontSize="22"
+                               FontSize="42"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
                                Background="Transparent" />
@@ -125,20 +148,27 @@
             <charts:Chart.Series>
                 <charts:DataSeries x:Name="DataSeries"
                                    MouseLeftButtonDown="DataSeries_OnMouseLeftButtonDown"
+                                   Bevel="False" 
+                                   Exploded="True"
                                    PercentageFormatString="#0.00"
                                    LabelFontColor="#1b1b1b" 
                                    LabelFontSize="26"
                                    LabelLineThickness="2"
                                    LabelEnabled="True"
+                                   IncludeYValueInLegend="True"
+                                   IncludeDataPointsInLegend="True"
+                                   IncludePercentageInLegend="True"
                                    LabelLineColor="#1b1b1b"
+                                   ShowInLegend="True"
                                    LabelStyle="OutSide"
                                    LabelFontFamily="Microsoft Yahei"
                                    LabelFontWeight="Regular">
                     <charts:DataSeries.DataMappings>
                         <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
                         <charts:DataMapping MemberName="YValue" Path="Value"/>
-                        <charts:DataMapping MemberName="LabelText" Path="Tag"/>
+                        <charts:DataMapping MemberName="LabelText" Path="Label"/>
                         <charts:DataMapping MemberName="Color" Path="Color"/>
+                        <charts:DataMapping MemberName="LegendText" Path="Name"/>
                     </charts:DataSeries.DataMappings>
                 </charts:DataSeries>
             </charts:Chart.Series>
@@ -175,7 +205,8 @@
                              Interval="0.2"
                              AxisMaximum="1.18">
                     <charts:Axis.AxisLabels>
-                        <charts:AxisLabels FontWeight="Light" 
+                        <charts:AxisLabels x:Name="CorrectAxisYLabels" 
+                                           FontWeight="Light" 
                                            FontSize="20"
                                            FontFamily="Microsoft Yahei" 
                                            FontColor="#1b1b1b" />
@@ -199,7 +230,8 @@
                              TitleFontSize="20">
                     <!--设置X轴的字体等属性-->
                     <charts:Axis.AxisLabels>
-                        <charts:AxisLabels  FontWeight="Light" 
+                        <charts:AxisLabels  x:Name="CorrectAxisXLabels"
+                                            FontWeight="Light" 
                                             FontSize="24"
                                             FontFamily="Microsoft Yahei" 
                                             FontColor="#1b1b1b"/>
@@ -214,9 +246,9 @@
             </charts:Chart.AxesX>
 
             <charts:Chart.Legends>
-                <charts:Legend HorizontalAlignment="Right" 
+                <charts:Legend x:Name="CorrectLegend" 
+                               HorizontalAlignment="Right" 
                                VerticalAlignment="Center" 
-                               Padding="0 0 200 0" 
                                DockInsidePlotArea="True"
                                EntryMargin="10"
                                ShadowEnabled="False" 
@@ -227,7 +259,7 @@
                                FontSize="22"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
-                               Background="Transparent" />
+                               Background="Red" />
             </charts:Chart.Legends>
 
 
@@ -241,12 +273,13 @@
                                    LabelEnabled="True"
                                    LabelLineColor="#1b1b1b"
                                    LabelStyle="OutSide"
+                                   ShowInLegend="True"
                                    LabelFontFamily="Microsoft Yahei"
                                    LabelFontWeight="Regular">
                     <charts:DataSeries.DataMappings>
                         <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
                         <charts:DataMapping MemberName="YValue" Path="Value"/>
-                        <charts:DataMapping MemberName="LabelText" Path="Tag"/>
+                        <charts:DataMapping MemberName="LabelText" Path="Label"/>
                         <charts:DataMapping MemberName="Color" Path="Color"/>
                     </charts:DataSeries.DataMappings>
                 </charts:DataSeries>
@@ -257,9 +290,8 @@
                AllowsTransparency="True"
                Opened="Popup_OnOpened"
                Placement="MousePoint"
-               PlacementTarget="{Binding ElementName=VisifireChart}"
+               PlacementTarget="{Binding ElementName=Grid}"
                StaysOpen="False"
-               VerticalOffset="-35"
                Height="50"
                Width="150"
                IsOpen="False">
@@ -277,7 +309,9 @@
                          BorderThickness="0"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
-                         Background="Transparent">
+                         Background="Transparent"
+                         ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                         ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Loaded="FrameworkElement_OnLoaded"
@@ -309,7 +343,7 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Bottom"
                        Margin="0 10"
-                       Source="/Images/Arrow_Left.png"
+                       Source="/Cvte.Windows.Controls.Charts;component/Images/Arrow_Left.png"
                        Stretch="Uniform"></Image>
 
                 <Image x:Name="RightArrow"
@@ -317,7 +351,7 @@
                        HorizontalAlignment="Right"
                        VerticalAlignment="Bottom"
                        Margin="0 10"
-                       Source="/Images/Arrow_Right.png"
+                       Source="/Cvte.Windows.Controls.Charts;component/Images/Arrow_Right.png"
                        Stretch="Uniform"></Image>
 
             </Grid>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace Cvte.Windows.Controls.Charts
+namespace Cvte.Windows.Controls.Chart
 {
     public class ChartItem
     {
@@ -15,6 +15,8 @@ namespace Cvte.Windows.Controls.Charts
         public Brush Color { get; set; }
 
         public Brush SelectedColor { get; set; }
+
+        public string Label { get; set; }
 
         public object Tag { get; set; }
 
@@ -52,5 +54,14 @@ namespace Cvte.Windows.Controls.Charts
             Details = details;
             Percent = percent;
         }
+    }
+
+    public class RangeChartItem : ChartItem
+    {
+        public int Start { get; set; }
+
+        public int End { get; set; }
+
+        public double Range { get; set; }
     }
 }
