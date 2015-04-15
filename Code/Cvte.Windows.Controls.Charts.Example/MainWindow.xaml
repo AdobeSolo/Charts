@@ -66,9 +66,9 @@
                           TipFontSize="20"
                           TipFontWeight="Light"
                           TipForeground="Blue"
-                          MaxScore="32"
-                          MinScore="0"
+                          Maximum="32"
+                          Minimum="0"
                           ShowInLegend="False"
-                          ScoreStep="4"></chart1:RangeChart>
+                          Interval="4"></chart1:RangeChart>
     </Grid>
 </Window>

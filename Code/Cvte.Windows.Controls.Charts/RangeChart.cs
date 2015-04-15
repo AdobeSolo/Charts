@@ -8,21 +8,21 @@ namespace Cvte.Windows.Controls.Chart
 {
     public class RangeChart:Chart
     {
-        public static readonly DependencyProperty MaxScoreProperty = DependencyProperty.Register(
-            "MaxScore",
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
+            "Maximum",
             typeof(double),
             typeof(RangeChart),
-            new PropertyMetadata(default(double), MaxScoreChanged));
+            new PropertyMetadata(default(double), MaximumChanged));
 
         [Bindable(true)]
-        public double MaxScore
+        public double Maximum
         {
-            get { return (double)GetValue(MaxScoreProperty); }
-            set { SetValue(MaxScoreProperty, value); }
+            get { return (double)GetValue(MaximumProperty); }
+            set { SetValue(MaximumProperty, value); }
         }
 
 
-        private static void MaxScoreChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void MaximumChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var chart = obj as RangeChart;
             if (chart == null) return;
@@ -32,21 +32,21 @@ namespace Cvte.Windows.Controls.Chart
         }
 
 
-        public static readonly DependencyProperty ScoreStepProperty = DependencyProperty.Register(
-            "ScoreStep",
+        public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register(
+            "Interval",
             typeof(double),
             typeof(RangeChart),
-            new PropertyMetadata(default(double), ScoreStepChanged));
+            new PropertyMetadata(default(double), IntervalChanged));
 
         [Bindable(true)]
-        public double ScoreStep
+        public double Interval
         {
-            get { return (double)GetValue(ScoreStepProperty); }
-            set { SetValue(ScoreStepProperty, value); }
+            get { return (double)GetValue(IntervalProperty); }
+            set { SetValue(IntervalProperty, value); }
         }
 
 
-        private static void ScoreStepChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void IntervalChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var chart = obj as RangeChart;
             if (chart == null) return;
@@ -56,17 +56,17 @@ namespace Cvte.Windows.Controls.Chart
         }
 
 
-        public static readonly DependencyProperty MinScoreProperty = DependencyProperty.Register(
-            "MinScore",
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
+            "Minimum",
             typeof(double),
             typeof(RangeChart),
             new PropertyMetadata(default(double), MinScoreChanged));
 
         [Bindable(true)]
-        public double MinScore
+        public double Minimum
         {
-            get { return (double)GetValue(MinScoreProperty); }
-            set { SetValue(MinScoreProperty, value); }
+            get { return (double)GetValue(MinimumProperty); }
+            set { SetValue(MinimumProperty, value); }
         }
 
 
@@ -122,8 +122,8 @@ namespace Cvte.Windows.Controls.Chart
             {
                 var rangeChartItem = chartItem as RangeChartItem;
                 if(rangeChartItem == null) continue;
-                var index = (int)(rangeChartItem.Range/ScoreStep);
-                double value = Math.Round((2 * index + 1) * ScoreStep / 2,4);
+                var index = (int)(rangeChartItem.Range/Interval);
+                double value = Math.Round((2 * index + 1) * Interval / 2,4);
                 rangeChartItem.Range = value;
                 bool isContain = false;
                 foreach (RangeChartItem item in rangeChartItems)
