@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +19,8 @@ namespace Cvte.Windows.Controls.Chart
     public partial class Chart
     {
         private WrapPanel WrapPanel;
+
+        IList<string> _dataPointPropertiesNameList = new List<string>();
 
         #region View3D
 
@@ -1447,6 +1451,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
 
         protected void AddItemToDataMapping(string propertyName,string path)
         {
+            CheckPropertyName(propertyName);
             RemoveItemFromDataMapping(propertyName);
             DataSeries.DataMappings.Add(new DataMapping
             {
@@ -1462,6 +1467,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
 
         protected void RemoveItemFromDataMapping(string propertyName)
         {
+            CheckPropertyName(propertyName);
             foreach (var dataMapping in DataSeries.DataMappings.Where(dataMapping => dataMapping.MemberName.Equals(propertyName)))
             {
                 DataSeries.DataMappings.Remove(dataMapping);
@@ -1472,6 +1478,27 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             {
                 CorrectDataSeries.DataMappings.Remove(dataMapping);
                 break;
+            }
+        }
+
+        private void CheckPropertyName(string propertyName)
+        {
+            if (_dataPointPropertiesNameList.Count == 0)
+            {
+                GetDataPointPropertiesName();
+            }
+            if (!_dataPointPropertiesNameList.Contains(propertyName))
+            {
+                throw new InvalidDataException("Invalid Property Name");
+            }
+        }
+
+        private void GetDataPointPropertiesName()
+        {
+            _dataPointPropertiesNameList.Clear();
+            foreach (PropertyInfo propertyInfo in typeof(DataPoint).GetProperties())
+            {
+                _dataPointPropertiesNameList.Add(propertyInfo.Name);
             }
         }
 
