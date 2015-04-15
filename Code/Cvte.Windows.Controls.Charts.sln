@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cvte.Windows.Controls.Chart.Example", "Cvte.Windows.Controls.ChartsDemo\Cvte.Windows.Controls.Chart.Example.csproj", "{9B7375D8-A10D-45B0-8523-C31E5B2EF7FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cvte.Windows.Controls.Charts.Example", "Cvte.Windows.Controls.ChartsDemo\Cvte.Windows.Controls.Charts.Example.csproj", "{9B7375D8-A10D-45B0-8523-C31E5B2EF7FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cvte.Windows.Controls.Chart", "Cvte.Windows.Controls.Chart\Cvte.Windows.Controls.Chart.csproj", "{A2052C82-9004-4B16-83B5-77535667E33A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cvte.Windows.Controls.Charts", "Cvte.Windows.Controls.Chart\Cvte.Windows.Controls.Charts.csproj", "{A2052C82-9004-4B16-83B5-77535667E33A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

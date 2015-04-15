@@ -130,19 +130,18 @@
 
             <charts:Chart.Legends>
                 <charts:Legend x:Name="Legend"
-                               HorizontalAlignment="Left" 
+                               HorizontalAlignment="Right" 
                                VerticalAlignment="Top" 
                                DockInsidePlotArea="False"
-                               EntryMargin="10"
                                ShadowEnabled="False" 
                                BorderColor="Transparent"
                                BorderThickness="0"
                                LightingEnabled="False" 
                                FontWeight="Light" 
-                               FontSize="22"
+                               FontSize="42"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
-                               Background="Red" />
+                               Background="Transparent" />
             </charts:Chart.Legends>
 
 
@@ -156,11 +155,11 @@
                                    LabelFontSize="26"
                                    LabelLineThickness="2"
                                    LabelEnabled="True"
-                                   ShowInLegend="False"
                                    IncludeYValueInLegend="True"
                                    IncludeDataPointsInLegend="True"
                                    IncludePercentageInLegend="True"
                                    LabelLineColor="#1b1b1b"
+                                   ShowInLegend="True"
                                    LabelStyle="OutSide"
                                    LabelFontFamily="Microsoft Yahei"
                                    LabelFontWeight="Regular">
@@ -344,7 +343,7 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Bottom"
                        Margin="0 10"
-                       Source="/Cvte.Windows.Controls.Chart;component/Images/Arrow_Left.png"
+                       Source="/Cvte.Windows.Controls.Charts;component/Images/Arrow_Left.png"
                        Stretch="Uniform"></Image>
 
                 <Image x:Name="RightArrow"
@@ -352,7 +351,7 @@
                        HorizontalAlignment="Right"
                        VerticalAlignment="Bottom"
                        Margin="0 10"
-                       Source="/Cvte.Windows.Controls.Chart;component/Images/Arrow_Right.png"
+                       Source="/Cvte.Windows.Controls.Charts;component/Images/Arrow_Right.png"
                        Stretch="Uniform"></Image>
 
             </Grid>
