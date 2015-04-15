@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +19,8 @@ namespace Cvte.Windows.Controls.Chart
     public partial class Chart
     {
         private WrapPanel WrapPanel;
+
+        IList<string> _dataPointPropertiesNameList = new List<string>();
 
         #region View3D
 
@@ -1445,28 +1449,65 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             InitDataMappings();
         }
 
+        protected void AddItemToDataMapping(string propertyName,string path)
+        {
+            CheckPropertyName(propertyName);
+            RemoveItemFromDataMapping(propertyName);
+            DataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = propertyName,
+                Path = path
+            });
+            CorrectDataSeries.DataMappings.Add(new DataMapping
+            {
+                MemberName = propertyName,
+                Path = path
+            });
+        }
+
+        protected void RemoveItemFromDataMapping(string propertyName)
+        {
+            CheckPropertyName(propertyName);
+            foreach (var dataMapping in DataSeries.DataMappings.Where(dataMapping => dataMapping.MemberName.Equals(propertyName)))
+            {
+                DataSeries.DataMappings.Remove(dataMapping);
+                break;
+            }
+
+            foreach (var dataMapping in CorrectDataSeries.DataMappings.Where(dataMapping => dataMapping.MemberName.Equals(propertyName)))
+            {
+                CorrectDataSeries.DataMappings.Remove(dataMapping);
+                break;
+            }
+        }
+
+        private void CheckPropertyName(string propertyName)
+        {
+            if (_dataPointPropertiesNameList.Count == 0)
+            {
+                GetDataPointPropertiesName();
+            }
+            if (!_dataPointPropertiesNameList.Contains(propertyName))
+            {
+                throw new InvalidDataException("Invalid Property Name");
+            }
+        }
+
+        private void GetDataPointPropertiesName()
+        {
+            _dataPointPropertiesNameList.Clear();
+            foreach (PropertyInfo propertyInfo in typeof(DataPoint).GetProperties())
+            {
+                _dataPointPropertiesNameList.Add(propertyInfo.Name);
+            }
+        }
+
         protected virtual void InitDataMappings()
         {
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "AxisXLabel",
-                Path = "Name"
-            });
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "YValue",
-                Path = "Value"
-            });
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "LabelText",
-                Path = "Label"
-            });
-            DataSeries.DataMappings.Add(new DataMapping
-            {
-                MemberName = "Color",
-                Path = "Color"
-            });
+            AddItemToDataMapping(DataPoint.AxisXLabelProperty.Name,"Name");
+            AddItemToDataMapping(DataPoint.YValueProperty.Name, "Value");
+            AddItemToDataMapping(DataPoint.LabelTextProperty.Name, "Label");
+            AddItemToDataMapping(DataPoint.ColorProperty.Name, "Color");
         }
 
         private void SetAxisYValue(IEnumerable<ChartItem> dataSource)

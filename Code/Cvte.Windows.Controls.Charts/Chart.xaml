@@ -163,13 +163,6 @@
                                    LabelStyle="OutSide"
                                    LabelFontFamily="Microsoft Yahei"
                                    LabelFontWeight="Regular">
-                    <charts:DataSeries.DataMappings>
-                        <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
-                        <charts:DataMapping MemberName="YValue" Path="Value"/>
-                        <charts:DataMapping MemberName="LabelText" Path="Label"/>
-                        <charts:DataMapping MemberName="Color" Path="Color"/>
-                        <charts:DataMapping MemberName="LegendText" Path="Name"/>
-                    </charts:DataSeries.DataMappings>
                 </charts:DataSeries>
             </charts:Chart.Series>
         </charts:Chart>
@@ -276,12 +269,6 @@
                                    ShowInLegend="True"
                                    LabelFontFamily="Microsoft Yahei"
                                    LabelFontWeight="Regular">
-                    <charts:DataSeries.DataMappings>
-                        <charts:DataMapping MemberName="AxisXLabel" Path="Name"/>
-                        <charts:DataMapping MemberName="YValue" Path="Value"/>
-                        <charts:DataMapping MemberName="LabelText" Path="Label"/>
-                        <charts:DataMapping MemberName="Color" Path="Color"/>
-                    </charts:DataSeries.DataMappings>
                 </charts:DataSeries>
             </charts:Chart.Series>
         </charts:Chart>
