@@ -14,7 +14,7 @@ if os.path.isdir(tools_dir):
         pass
 
 __temp_dir = os.path.join(build_dir, '_temp_')
-subprocess.check_call('\"%s\" install BuildKit -OutputDirectory \"%s\"' % (nuget_exe, __temp_dir))
+subprocess.check_call('\"%s\" install BuildKit -OutputDirectory \"%s\" -Source http://172.18.48.217:8080/nuget/' % (nuget_exe, __temp_dir))
 
 __buildkit_dir_name = [dir for dir in os.listdir(__temp_dir) if dir.lower().startswith('buildkit')][0]
 try:
