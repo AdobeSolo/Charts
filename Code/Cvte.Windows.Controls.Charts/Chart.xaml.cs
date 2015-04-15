@@ -1472,6 +1472,34 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         }
 
 
+        public static readonly DependencyProperty AxisYMinimumProperty = DependencyProperty.Register(
+            "AxisYMinimum",
+            typeof(double),
+            typeof(Chart),
+            new PropertyMetadata(100.0, AxisYMinimumChanged));
+
+        [Bindable(true)]
+        public double AxisYMinimum
+        {
+            get
+            {
+                return (double)GetValue(AxisYMinimumProperty);
+            }
+            set
+            {
+                SetValue(AxisYMinimumProperty, value);
+            }
+        }
+
+
+        private static void AxisYMinimumChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            chart.AxisY.AxisMinimum = Convert.ToDouble(args.NewValue.ToString());
+        }
+
         public static readonly DependencyProperty AxisYIntervelProperty = DependencyProperty.Register(
             "AxisYIntervel",
             typeof(double),
