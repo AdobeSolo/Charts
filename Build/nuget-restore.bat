@@ -1,0 +1,1 @@
+"C:\Nuget\Nuget.exe" restore "%WORKSPACE%\code\Cvte.Windows.Controls.Charts.sln"
