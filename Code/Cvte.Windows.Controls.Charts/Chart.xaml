@@ -181,6 +181,7 @@
                       IndicatorEnabled="False"
                       LightingEnabled="False"
                       DataPointWidth="5.8"
+                      Visibility="Collapsed"
                       Loaded="CorrectChart_OnLoaded">
 
             <!--消除图表阴影-->

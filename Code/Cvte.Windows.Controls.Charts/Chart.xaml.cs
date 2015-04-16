@@ -87,11 +87,9 @@ namespace Cvte.Windows.Controls.Chart
             }
             if(args.NewValue.Equals(args.OldValue)) return;
             var dataSource = args.NewValue as IList<ChartItem>;
-
            
             if(dataSource == null) return;
             chart.UpdateDataSource(dataSource);
-            chart.SetAxisYValue(dataSource);
         }
 
         #endregion
@@ -1442,6 +1440,124 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
 
         #endregion
 
+
+        #region AxisY
+
+        public static readonly DependencyProperty AxisYMaximumProperty = DependencyProperty.Register(
+            "AxisYMaximum",
+            typeof(double),
+            typeof(Chart),
+            new PropertyMetadata(100.0, AxisYMaximumChanged));
+
+        [Bindable(true)]
+        public double AxisYMaximum
+        {
+            get
+            {
+                return (double)GetValue(AxisYMaximumProperty);
+            }
+            set
+            {
+                SetValue(AxisYMaximumProperty, value);
+            }
+        }
+
+
+        private static void AxisYMaximumChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            chart.AxisY.AxisMaximum = Convert.ToDouble(args.NewValue.ToString());
+        }
+
+
+        public static readonly DependencyProperty AxisYMinimumProperty = DependencyProperty.Register(
+            "AxisYMinimum",
+            typeof(double),
+            typeof(Chart),
+            new PropertyMetadata(100.0, AxisYMinimumChanged));
+
+        [Bindable(true)]
+        public double AxisYMinimum
+        {
+            get
+            {
+                return (double)GetValue(AxisYMinimumProperty);
+            }
+            set
+            {
+                SetValue(AxisYMinimumProperty, value);
+            }
+        }
+
+
+        private static void AxisYMinimumChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            chart.AxisY.AxisMinimum = Convert.ToDouble(args.NewValue.ToString());
+        }
+
+        public static readonly DependencyProperty AxisYIntervelProperty = DependencyProperty.Register(
+            "AxisYIntervel",
+            typeof(double),
+            typeof(Chart),
+            new PropertyMetadata(20.0, AxisYIntervelChanged));
+
+        [Bindable(true)]
+        public double AxisYIntervel
+        {
+            get
+            {
+                return (double)GetValue(AxisYIntervelProperty);
+            }
+            set
+            {
+                SetValue(AxisYIntervelProperty, value);
+            }
+        }
+
+
+        private static void AxisYIntervelChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            chart.AxisY.Interval = Convert.ToDouble(args.NewValue.ToString());
+        }
+
+        public static readonly DependencyProperty AxisYValueFormatStringProperty = DependencyProperty.Register(
+            "AxisYValueFormatString",
+            typeof(string),
+            typeof(Chart),
+            new PropertyMetadata(string.Empty, AxisYValueFormatStringChanged));
+
+        [Bindable(true)]
+        public double AxisYValueFormatString
+        {
+            get
+            {
+                return (double)GetValue(AxisYValueFormatStringProperty);
+            }
+            set
+            {
+                SetValue(AxisYValueFormatStringProperty, value);
+            }
+        }
+
+
+        private static void AxisYValueFormatStringChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            chart.AxisY.ValueFormatString = args.NewValue.ToString();
+        }
+
+      
+        #endregion
         public Chart()
         {
             InitializeComponent();
@@ -1496,7 +1612,8 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         private void GetDataPointPropertiesName()
         {
             _dataPointPropertiesNameList.Clear();
-            foreach (PropertyInfo propertyInfo in typeof(DataPoint).GetProperties())
+            var properties = typeof (DataPoint).GetProperties();
+            foreach (PropertyInfo propertyInfo in properties)
             {
                 _dataPointPropertiesNameList.Add(propertyInfo.Name);
             }
@@ -1508,32 +1625,6 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             AddItemToDataMapping(DataPoint.YValueProperty.Name, "Value");
             AddItemToDataMapping(DataPoint.LabelTextProperty.Name, "Label");
             AddItemToDataMapping(DataPoint.ColorProperty.Name, "Color");
-        }
-
-        private void SetAxisYValue(IEnumerable<ChartItem> dataSource)
-        {
-            double maxValue = 0;
-            double minValue = 0;
-            foreach (var chartItem in dataSource)
-            {
-                maxValue = Math.Max(maxValue, chartItem.Value);
-                if (Math.Abs(chartItem.Value) > 0)
-                {
-                    minValue = Math.Max(minValue, chartItem.Value);
-                }
-            }
-            if (0 < minValue && minValue < 1 && maxValue <= 1)
-            {
-                AxisY.AxisMaximum = 1.18;
-                AxisY.Interval = 0.2;
-                AxisY.ValueFormatString =  "#0%";
-            }
-            else
-            {
-                AxisY.AxisMaximum = 1.10 * maxValue;
-                AxisY.Interval = maxValue / 5;
-                AxisY.ValueFormatString = "#";
-            }
         }
 
         private void ChangeDataPointWidth()

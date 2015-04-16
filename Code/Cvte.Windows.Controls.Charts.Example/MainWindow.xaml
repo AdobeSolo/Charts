@@ -46,7 +46,7 @@
                      LabelForeground="DeepSkyBlue"
                      DataPointWidth="20"
                      ShowInLegend="True"
-                     RenderMode="Pie"
+                     RenderMode="Column"
                      SelectedItemChanged="Chart_OnSelectedItemChanged"
                      PopupEnabled="True"></chart1:Chart>
         
