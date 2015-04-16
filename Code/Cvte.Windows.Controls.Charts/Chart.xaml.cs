@@ -1612,7 +1612,8 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         private void GetDataPointPropertiesName()
         {
             _dataPointPropertiesNameList.Clear();
-            foreach (PropertyInfo propertyInfo in typeof(DataPoint).GetProperties())
+            var properties = typeof (DataPoint).GetProperties();
+            foreach (PropertyInfo propertyInfo in properties)
             {
                 _dataPointPropertiesNameList.Add(propertyInfo.Name);
             }
