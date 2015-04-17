@@ -45,6 +45,14 @@ namespace Cvte.Windows.Controls.Chart
 
         }
 
+        public ChartItem(string name, double value, Brush color,Brush selectedColor)
+        {
+            Name = name;
+            Value = value;
+            Color = color;
+            SelectedColor = SelectedColor;
+        }
+
         public ChartItem(string name, double value, IList<string> details)
         {
             Name = name;
