@@ -1599,11 +1599,11 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
             new PropertyMetadata(string.Empty, AxisYValueFormatStringChanged));
 
         [Bindable(true)]
-        public double AxisYValueFormatString
+        public string AxisYValueFormatString
         {
             get
             {
-                return (double)GetValue(AxisYValueFormatStringProperty);
+                return (string)GetValue(AxisYValueFormatStringProperty);
             }
             set
             {
