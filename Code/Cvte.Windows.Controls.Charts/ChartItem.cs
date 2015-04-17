@@ -6,6 +6,7 @@ namespace Cvte.Windows.Controls.Chart
 {
     public class ChartItem
     {
+        private string _label = " ";
         public string Name { get; set; }
 
         public double Value { get; set; }
@@ -16,7 +17,11 @@ namespace Cvte.Windows.Controls.Chart
 
         public Brush SelectedColor { get; set; }
 
-        public string Label { get; set; }
+        public string Label 
+        {
+            get { return _label; }
+            set { _label = value; }
+        }
 
         public object Tag { get; set; }
 
@@ -38,6 +43,14 @@ namespace Cvte.Windows.Controls.Chart
             : this(name, value, new List<string>())
         {
 
+        }
+
+        public ChartItem(string name, double value, Brush color,Brush selectedColor)
+        {
+            Name = name;
+            Value = value;
+            Color = color;
+            SelectedColor = SelectedColor;
         }
 
         public ChartItem(string name, double value, IList<string> details)

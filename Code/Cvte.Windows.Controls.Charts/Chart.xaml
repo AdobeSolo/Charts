@@ -130,20 +130,29 @@
 
             <charts:Chart.Legends>
                 <charts:Legend x:Name="Legend"
-                               HorizontalAlignment="Right" 
-                               VerticalAlignment="Top" 
                                DockInsidePlotArea="False"
                                ShadowEnabled="False" 
                                BorderColor="Transparent"
                                BorderThickness="0"
                                LightingEnabled="False" 
                                FontWeight="Light" 
-                               FontSize="42"
+                               FontSize="22"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
                                Background="Transparent" />
             </charts:Chart.Legends>
 
+            <charts:Chart.ColorSets>
+                <charts:ColorSet Id="myColors">
+                    <charts:ColorSet.Brushes>
+                        <SolidColorBrush Color="#88b220"></SolidColorBrush>
+                        <SolidColorBrush Color="#e5b62a"></SolidColorBrush>
+                        <SolidColorBrush Color="#158ab5"></SolidColorBrush>
+                        <SolidColorBrush Color="#b778b4"></SolidColorBrush>
+                        <SolidColorBrush Color="#de5987"></SolidColorBrush>
+                    </charts:ColorSet.Brushes>
+                </charts:ColorSet>
+            </charts:Chart.ColorSets>
 
             <charts:Chart.Series>
                 <charts:DataSeries x:Name="DataSeries"
@@ -155,6 +164,8 @@
                                    LabelFontSize="26"
                                    LabelLineThickness="2"
                                    LabelEnabled="True"
+                                   Legend="Legend"
+                                   ColorSet="myColors"
                                    IncludeYValueInLegend="True"
                                    IncludeDataPointsInLegend="True"
                                    IncludePercentageInLegend="True"
@@ -241,8 +252,6 @@
 
             <charts:Chart.Legends>
                 <charts:Legend x:Name="CorrectLegend" 
-                               HorizontalAlignment="Right" 
-                               VerticalAlignment="Center" 
                                DockInsidePlotArea="True"
                                EntryMargin="10"
                                ShadowEnabled="False" 
@@ -253,7 +262,7 @@
                                FontSize="22"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
-                               Background="Red" />
+                               Background="Transparent" />
             </charts:Chart.Legends>
 
 
@@ -263,6 +272,7 @@
                                    PercentageFormatString="#0.00"
                                    LabelFontColor="#1b1b1b" 
                                    LabelFontSize="26"
+                                   Legend="CorrectLegend"
                                    LabelLineThickness="2"
                                    LabelEnabled="True"
                                    LabelLineColor="#1b1b1b"
@@ -298,6 +308,7 @@
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Background="Transparent"
+                         Style="{x:Null}"
                          ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListBox.ItemsPanel>
