@@ -298,6 +298,7 @@
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Background="Transparent"
+                         Style="{x:Null}"
                          ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListBox.ItemsPanel>

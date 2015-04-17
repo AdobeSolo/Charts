@@ -1738,16 +1738,14 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
                 {
                     LeftArrow.Visibility = Visibility.Visible;
                     RightArrow.Visibility = Visibility.Collapsed;
-                    Popup.HorizontalOffset = Popup.Width;
                 }
                 else
                 {
                     LeftArrow.Visibility = Visibility.Collapsed;
                     RightArrow.Visibility = Visibility.Visible;
-                    Popup.HorizontalOffset = 0;
                 }
-                Popup.VerticalOffset = 25 - Popup.Height;
             }
+            Popup.VerticalOffset = 25 - Popup.Height;
         }
 
         private void SetPopupSize()
@@ -1786,7 +1784,7 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             else
             {
                 Popup.Height = 140;
-                WrapPanel.Height = 40*Math.Ceiling((double) Detials.Items.Count/3);
+                WrapPanel.Height = 40 * Math.Ceiling((double)Detials.Items.Count / 3);
             }
         }
 
