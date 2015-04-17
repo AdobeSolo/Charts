@@ -1212,11 +1212,12 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
         #endregion
 
         #region Legend
+
         public static readonly DependencyProperty ShowInLegendProperty = DependencyProperty.Register(
-   "ShowInLegend",
-   typeof(bool),
-   typeof(Chart),
-   new PropertyMetadata(true, ShowInLegendChanged));
+            "ShowInLegend",
+            typeof (bool),
+            typeof (Chart),
+            new PropertyMetadata(true, ShowInLegendChanged));
 
         [Bindable(true)]
         public bool ShowInLegend
@@ -1243,10 +1244,10 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LabelFontFamilyChanged))
         }
 
         public static readonly DependencyProperty LegendFontFamilyProperty = DependencyProperty.Register(
-"LegendFontFamily",
-typeof(FontFamily),
-typeof(Chart),
-new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged));
+            "LegendFontFamily",
+            typeof (FontFamily),
+            typeof (Chart),
+            new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged));
 
         [Bindable(true)]
         public FontFamily LegendFontFamily
@@ -1274,10 +1275,10 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
 
 
         public static readonly DependencyProperty LegendFontWeightProperty = DependencyProperty.Register(
-     "LegendFontWeight",
-     typeof(FontWeight),
-     typeof(Chart),
-     new PropertyMetadata(FontWeights.Light, LegendFontWeightChanged));
+            "LegendFontWeight",
+            typeof (FontWeight),
+            typeof (Chart),
+            new PropertyMetadata(FontWeights.Light, LegendFontWeightChanged));
 
         [Bindable(true)]
         public FontWeight LegendFontWeight
@@ -1305,10 +1306,10 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         }
 
         public static readonly DependencyProperty LegendFontSizeProperty = DependencyProperty.Register(
-     "LegendFontSize",
-     typeof(double),
-     typeof(Chart),
-     new PropertyMetadata(26.0, LegendFontSizeChanged));
+            "LegendFontSize",
+            typeof (double),
+            typeof (Chart),
+            new PropertyMetadata(26.0, LegendFontSizeChanged));
 
         [Bindable(true)]
         public double LegendFontSize
@@ -1336,10 +1337,10 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         }
 
         public static readonly DependencyProperty LegendForegroundProperty = DependencyProperty.Register(
-   "LegendForeground",
-   typeof(Color),
-   typeof(Chart),
-   new PropertyMetadata(Colors.Black, LegendForegroundChanged));
+            "LegendForeground",
+            typeof (Color),
+            typeof (Chart),
+            new PropertyMetadata(Colors.Black, LegendForegroundChanged));
 
         [Bindable(true)]
         public Color LegendForeground
@@ -1364,6 +1365,70 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
             var foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(args.NewValue.ToString()));
             chart.Legend.FontColor = foreground;
             chart.CorrectLegend.FontColor = foreground;
+        }
+
+        public static readonly DependencyProperty LegendHorizontalAlignmentProperty = DependencyProperty.Register(
+           "LegendHorizontalAlignment",
+           typeof(HorizontalAlignment),
+           typeof(Chart),
+           new PropertyMetadata(HorizontalAlignment.Center, LegendHorizontalAlignmentChanged));
+
+        [Bindable(true)]
+        public HorizontalAlignment LegendHorizontalAlignment
+        {
+            get
+            {
+                return (HorizontalAlignment)GetValue(LegendHorizontalAlignmentProperty);
+            }
+            set
+            {
+                SetValue(LegendHorizontalAlignmentProperty, value);
+            }
+        }
+
+
+        private static void LegendHorizontalAlignmentChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            // ReSharper disable once PossibleNullReferenceException
+            HorizontalAlignment horizontalAlignment;
+            Enum.TryParse(args.NewValue.ToString(), out horizontalAlignment);
+            chart.Legend.HorizontalAlignment = horizontalAlignment;
+            chart.CorrectLegend.HorizontalAlignment = horizontalAlignment;
+        }
+
+        public static readonly DependencyProperty LegendVerticalAlignmentProperty = DependencyProperty.Register(
+        "LegendVerticalAlignment",
+        typeof(VerticalAlignment),
+        typeof(Chart),
+        new PropertyMetadata(VerticalAlignment.Bottom, LegendVerticalAlignmentChanged));
+
+        [Bindable(true)]
+        public VerticalAlignment LegendVerticalAlignment
+        {
+            get
+            {
+                return (VerticalAlignment)GetValue(LegendVerticalAlignmentProperty);
+            }
+            set
+            {
+                SetValue(LegendVerticalAlignmentProperty, value);
+            }
+        }
+
+
+        private static void LegendVerticalAlignmentChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var chart = obj as Chart;
+            if (chart == null) return;
+            if (args.NewValue.Equals(args.OldValue)) return;
+            // ReSharper disable once PossibleNullReferenceException
+            VerticalAlignment verticalAlignment;
+            Enum.TryParse(args.NewValue.ToString(), out verticalAlignment);
+            chart.Legend.VerticalAlignment = verticalAlignment;
+            chart.CorrectLegend.VerticalAlignment = verticalAlignment;
         }
         #endregion
 
@@ -1439,7 +1504,6 @@ new PropertyMetadata(new FontFamily("Microsoft YaHei"), LegendFontFamilyChanged)
         }
 
         #endregion
-
 
         #region AxisY
 

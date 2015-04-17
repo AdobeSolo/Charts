@@ -130,15 +130,13 @@
 
             <charts:Chart.Legends>
                 <charts:Legend x:Name="Legend"
-                               HorizontalAlignment="Right" 
-                               VerticalAlignment="Top" 
                                DockInsidePlotArea="False"
                                ShadowEnabled="False" 
                                BorderColor="Transparent"
                                BorderThickness="0"
                                LightingEnabled="False" 
                                FontWeight="Light" 
-                               FontSize="42"
+                               FontSize="22"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
                                Background="Transparent" />
@@ -242,8 +240,6 @@
 
             <charts:Chart.Legends>
                 <charts:Legend x:Name="CorrectLegend" 
-                               HorizontalAlignment="Right" 
-                               VerticalAlignment="Center" 
                                DockInsidePlotArea="True"
                                EntryMargin="10"
                                ShadowEnabled="False" 
@@ -254,7 +250,7 @@
                                FontSize="22"
                                FontFamily="Microsoft Yahei" 
                                FontColor="#1b1b1b" 
-                               Background="Red" />
+                               Background="Transparent" />
             </charts:Chart.Legends>
 
 
