@@ -87,41 +87,40 @@ namespace Cvte.Windows.Controls.Chart
         {
             base.InitDataMappings();
             AddItemToDataMapping(DataPoint.XValueProperty.Name, "Range");
-            AddItemToDataMapping(DataPoint.LabelTextProperty.Name, "Value");
         }
 
-        protected override void UpdateChartSource(IList<ChartItem> dataSource)
-        {
-            IList<RangeChartItem> rangeChartItems = new List<RangeChartItem>();
+        //protected override void UpdateChartSource(IList<ChartItem> dataSource)
+        //{
+        //    IList<RangeChartItem> rangeChartItems = new List<RangeChartItem>();
             
-            foreach (ChartItem chartItem in dataSource)
-            {
-                var rangeChartItem = chartItem as RangeChartItem;
-                if(rangeChartItem == null) continue;
-                var index = (int)(rangeChartItem.Range/Interval);
-                double value = Math.Round((2 * index + 1) * Interval / 2,4);
-                rangeChartItem.Range = value;
-                bool isContain = false;
-                foreach (RangeChartItem item in rangeChartItems)
-                {
-                    if (Math.Abs(item.Range - value) <= 0)
-                    {
-                        item.Value += rangeChartItem.Value;
-                        foreach (var detail in rangeChartItem.Details)
-                        {
-                            item.Details.Add(detail);
-                        }
-                        isContain = true;
-                    }
-                }
-                if (!isContain)
-                {
-                    rangeChartItems.Add(rangeChartItem);
-                }
-            }
+        //    foreach (ChartItem chartItem in dataSource)
+        //    {
+        //        var rangeChartItem = chartItem as RangeChartItem;
+        //        if(rangeChartItem == null) continue;
+        //        var index = (int)(rangeChartItem.Range/Interval);
+        //        double value = Math.Round((2 * index + 1) * Interval / 2,4);
+        //        rangeChartItem.Range = value;
+        //        bool isContain = false;
+        //        foreach (RangeChartItem item in rangeChartItems)
+        //        {
+        //            if (Math.Abs(item.Range - value) <= 0)
+        //            {
+        //                item.Value += rangeChartItem.Value;
+        //                foreach (var detail in rangeChartItem.Details)
+        //                {
+        //                    item.Details.Add(detail);
+        //                }
+        //                isContain = true;
+        //            }
+        //        }
+        //        if (!isContain)
+        //        {
+        //            rangeChartItems.Add(rangeChartItem);
+        //        }
+        //    }
 
-            DataSeries.DataSource = rangeChartItems;
-            CorrectDataSeries.DataSource = rangeChartItems;
-        }
+        //    DataSeries.DataSource = rangeChartItems;
+        //    CorrectDataSeries.DataSource = rangeChartItems;
+        //}
     }
 }

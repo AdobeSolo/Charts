@@ -142,6 +142,17 @@
                                Background="Transparent" />
             </charts:Chart.Legends>
 
+            <charts:Chart.ColorSets>
+                <charts:ColorSet Id="myColors">
+                    <charts:ColorSet.Brushes>
+                        <SolidColorBrush Color="#88b220"></SolidColorBrush>
+                        <SolidColorBrush Color="#e5b62a"></SolidColorBrush>
+                        <SolidColorBrush Color="#158ab5"></SolidColorBrush>
+                        <SolidColorBrush Color="#b778b4"></SolidColorBrush>
+                        <SolidColorBrush Color="#de5987"></SolidColorBrush>
+                    </charts:ColorSet.Brushes>
+                </charts:ColorSet>
+            </charts:Chart.ColorSets>
 
             <charts:Chart.Series>
                 <charts:DataSeries x:Name="DataSeries"
@@ -154,6 +165,7 @@
                                    LabelLineThickness="2"
                                    LabelEnabled="True"
                                    Legend="Legend"
+                                   ColorSet="myColors"
                                    IncludeYValueInLegend="True"
                                    IncludeDataPointsInLegend="True"
                                    IncludePercentageInLegend="True"
